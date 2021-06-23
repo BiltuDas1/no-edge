@@ -1,6 +1,8 @@
 # The NO Edge Project
 The Project Helps you to remove build-in Edge Browser from Windows and replacing another Browser instead of Edge
 
+NOTE: THE PROJECT BREAKS WINDOWS 10 SEARCH, SO YOU NEED TO [DISABLE WINDOWS 10 SEARCH](https://www.howtogeek.com/224159/how-to-disable-bing-in-the-windows-10-start-menu/) BEFORE DOING ANYTHING.
+
 # Installation
 ### 1. Remove Microsof Edge
 Before Doing anything you need to uninstall Microsoft Edge form your System.
@@ -12,8 +14,9 @@ Before Doing anything you need to uninstall Microsoft Edge form your System.
   
  The Microsoft Edge will uninstall automatically
   
- Although, Edge will keep some files to keep alive Windows, we just gonna delete some files from them to stop Edge from doing Our Operation.
- 
+ Although, Edge will keep some files to keep alive Windows, we just gonna delete some files from them to stop Edge from doing Our Operation.  
+  
+
 ### 2. Removing Edge Leftover Files from Windows Folder
 Now Don't close the Command Prompt, cuz We need it.
 
