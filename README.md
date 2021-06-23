@@ -40,5 +40,5 @@ Edge uses ``microsoft-edge:`` to open links into edge So we need to change the v
   Now all done, All ``microsoft-edge:`` opening links is port to ``C:\ProgramData\MSEDGE\edge.exe``  
   The ``C:\ProgramData\MSEDGE\edge.exe`` is modified version of Edge Browser. It's a Portable Program which open given links into those browser whose are set as default browser.
   
-  You can download the modified Web browser from [here](https://github.com/BiltuDas1/no-edge/tree/main/EDGE)
+  You can download the modified Web browser from [here](https://github.com/BiltuDas1/no-edge/tree/main/EDGE)  
   NOTE: SOME AV MAY DETECT THE FILE AS A VIRUS BUT IT'S FALSE POSITIVE.
