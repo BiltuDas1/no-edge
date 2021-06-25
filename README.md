@@ -1,10 +1,26 @@
 # The NO Edge Project
 The Project Helps you to remove build-in Edge Browser from Windows and replacing another Browser instead of Edge
 
-NOTE: THE PROJECT BREAKS WINDOWS 10 SEARCH, SO YOU NEED TO [DISABLE WINDOWS 10 SEARCH](https://www.howtogeek.com/224159/how-to-disable-bing-in-the-windows-10-start-menu/) BEFORE DOING ANYTHING.
+NOTE: THE PROJECT BREAKS WINDOWS 10 SEARCH, SO YOU NEED TO [DISABLE WINDOWS 10 BING SEARCH](https://www.howtogeek.com/224159/how-to-disable-bing-in-the-windows-10-start-menu/) BEFORE DOING ANYTHING.
 
-# Installation
-### 1. Remove Microsof Edge
+# Automatic Installation (Recommended)
+1. Download our [One Click Tool](https://github.com/BiltuDas1/no-edge/blob/main/noedge.exe)
+2. Change your Default Browser to Chrome, Firefox or any other browser.
+3. Disable your Antivirus before Launching the one click tool (Some Antivirus Detected the file as Malware, But It's False Positive)
+4. Launch the program and then follow instructions.
+
+WARNING: IF YOU WANT TO CHANGE YOUR BROWSER THEN DON'T USE THE TOOL, USE [MSEDGE SWITCHER](#how-to-use-msedge-switcher)
+
+### How to use MSEDGE Switcher?
+1. Download [msedge-switcher.cmd](https://github.com/BiltuDas1/no-edge/blob/main/msedge-switcher.cmd)
+2. Keep it into desktop (Or any other folder)
+3. Download [Modified Edge Browsers](https://github.com/BiltuDas1/no-edge/tree/main/EDGE) (executable file)
+4. Keep the executable file to your folder where you kept the msedge-switcher.cmd
+5. Now Run msedge-switcher.cmd as Adminstrator
+6. Done!
+
+# Manual Installation
+### 1. Remove Microsoft Edge
 Before Doing anything you need to uninstall Microsoft Edge form your System.
 
 1. Goto Start and Search for ``cmd.exe`` and Run Command Prompt as Adminstrator
