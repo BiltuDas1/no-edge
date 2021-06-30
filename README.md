@@ -14,7 +14,7 @@ WARNING: IF YOU WANT TO CHANGE YOUR BROWSER THEN DON'T USE THE TOOL, USE [MSEDGE
 ### How to use MSEDGE Switcher?
 1. Download [msedge-switcher.cmd](https://github.com/BiltuDas1/no-edge/blob/main/msedge-switcher.cmd)
 2. Keep it into desktop (Or any other folder)
-3. Download [Modified Edge Browsers](https://github.com/BiltuDas1/no-edge/tree/main/EDGE) (executable file)
+3. Download [Modified Edge Browsers](https://github.com/BiltuDas1/no-edge/tree/main/EDGE) (executable file) and rename it to `msedge.exe`
 4. Keep the executable file to your folder where you kept the msedge-switcher.cmd
 5. Now Run msedge-switcher.cmd as Adminstrator
 6. Done!
