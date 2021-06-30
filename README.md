@@ -5,7 +5,7 @@ NOTE: THE PROJECT BREAKS WINDOWS 10 SEARCH, SO YOU NEED TO [DISABLE WINDOWS 10 B
 
 # Automatic Installation (Recommended)
 1. Download our [One Click Tool](https://github.com/BiltuDas1/no-edge/blob/main/noedge.exe)
-2. Change your Default Browser to Chrome, Firefox or any other browser.
+2. Change your Default Browser to Chrome, Firefox or any other browser. (Don't use Internet Explorer)
 3. Disable your Antivirus before Launching the one click tool (Some Antivirus Detected the file as Malware, But It's False Positive)
 4. Launch the program and then follow instructions.
 
