@@ -1,5 +1,13 @@
 @echo off
 title Patch MS Edge
+:check_Permissions
+net session >nul 2>&1
+if %errorLevel% == 0 (
+    goto start
+) else (
+    echo Error! Right Click on the file and then choose 'Run As Administrator' & pause >nul & exit
+)
+
 set edge=%programdata%\MSEDGE
 if not exist "%edge%" echo %edge% Doesn't exist! & goto exit
 ren "%edge%\msedge.exe" "msedge.exe_bak"
