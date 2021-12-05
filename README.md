@@ -61,6 +61,10 @@ Edge uses ``microsoft-edge:`` to open links into edge So we need to change the v
   
   You can download the modified Web browser from [here](https://github.com/BiltuDas1/no-edge/tree/main/EDGE)  
   NOTE: SOME AV MAY DETECT THE FILE AS A VIRUS BUT IT'S FALSE POSITIVE.
-
+  
+# Donation
+If you like my work then you can support me by donating into following addresses.
+### BTC : bc1qegx9kwdln6ch3cxl39as3k3ezxu6rrg2533vnq
+  
 # Contact
 If you are interested then you can join into our telegram group [@techsouls0](https://t.me/techsouls0) or channel [@tecsouls](https://t.me/tecsouls)
