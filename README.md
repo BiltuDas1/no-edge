@@ -3,7 +3,7 @@ The Project Helps you to remove build-in Edge Browser from Windows and replacing
 
 NOTE: THE PROJECT BREAKS WINDOWS 10 SEARCH, SO YOU NEED TO [DISABLE WINDOWS 10 BING SEARCH](https://www.howtogeek.com/224159/how-to-disable-bing-in-the-windows-10-start-menu/) BEFORE DOING ANYTHING.
 
-# Automatic Installation (Recommended)
+# Automatic Installation (Outdated, Please use manual Installation Method)
 1. Download our [One Click Tool](https://github.com/BiltuDas1/no-edge/blob/main/noedge.exe)
 2. Change your Default Browser to Chrome, Firefox or any other browser. (Don't use Internet Explorer)
 3. Disable your Antivirus before Launching the one click tool (Some Antivirus Detected the file as Malware, But It's False Positive)
