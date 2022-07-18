@@ -42,7 +42,7 @@ There's you will found 2 folder ``Microsoft.MicrosoftEdge_8wekyb3d8bbwe`` and ``
 
 2. Use ``takeown /f Microsoft.MicrosoftEdge_8wekyb3d8bbwe /a /r`` to change owner to Adminstrator
 3. Now Use ``icacls Microsoft.MicrosoftEdge_8wekyb3d8bbwe /grant Everyone:f /t`` to give remove permission to all child files and folders
-4. ``rd /s /f Microsoft.MicrosoftEdge_8wekyb3d8bbwe`` to remove the folder completly
+4. ``rd /s /q Microsoft.MicrosoftEdge_8wekyb3d8bbwe`` to remove the folder completly
   
   Use the same method to the second folder to remove it.
 
