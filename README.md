@@ -1,4 +1,5 @@
 # The NO Edge Project
+Attention: Currently the project on Maintenance, please try again later.
 The Project Helps you to remove build-in Edge Browser from Windows and replacing another Browser instead of Edge
 
 NOTE: THE PROJECT BREAKS WINDOWS 10 SEARCH, SO YOU NEED TO [DISABLE WINDOWS 10 BING SEARCH](https://www.howtogeek.com/224159/how-to-disable-bing-in-the-windows-10-start-menu/) BEFORE DOING ANYTHING.
