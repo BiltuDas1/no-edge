@@ -8,7 +8,7 @@ if %errorLevel% == 0 (
     echo Error! Right Click on the file and then choose 'Run As Administrator' & pause >nul & exit
 )
 
-set edge=%programdata%\MSEDGE
+set edge=%programfiles(x86)%\Microsoft\Edge\Application
 if not exist "%edge%" echo %edge% Doesn't exist! & goto exit
 ren "%edge%\msedge.exe" "msedge.exe_bak"
 for %%a in (%0) do set path=%%~dpa
