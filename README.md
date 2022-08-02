@@ -1,15 +1,25 @@
 # The NO Edge Project
-**Please Note: If you used No Edge version 1.0.0.5 or earlier, then you can't use the latest version of noedge, for that you need to [uninstall](https://www.tomsguide.com/how-to/how-to-uninstall-microsoft-edge) and reinstall Edge browser from [Official Source](https://www.microsoft.com/en-us/edge) manually.**
-
 The Project Helps you to remove build-in Edge Browser from Windows and replacing another Browser instead of Edge
 
-NOTE: THE PROJECT BREAKS WINDOWS 10 SEARCH, SO YOU NEED TO [DISABLE WINDOWS 10 BING SEARCH](https://www.howtogeek.com/224159/how-to-disable-bing-in-the-windows-10-start-menu/) BEFORE DOING ANYTHING.
+**Please Note: If you used No Edge version 1.0.0.5 or earlier, then you can't use the latest version of noedge, for that you need to [uninstall](https://www.tomsguide.com/how-to/how-to-uninstall-microsoft-edge) and reinstall Edge browser from [Official Source](https://www.microsoft.com/en-us/edge) manually.**
 
-# Automatic Installation
-1. Download [One Click Tool](https://github.com/BiltuDas1/no-edge/blob/main/noedge.exe)
-2. Change your Default Browser to Chrome, Firefox or any other browser. (Don't use Internet Explorer)
-3. Disable your Antivirus before Launching the one click tool (Some Antivirus Detected the file as Malware, But It's False Positive)
-4. Launch the program and then follow instructions.
+
+# Pre-Requesting
+1. Another Browser like firefox, chromium etc. (Don't choose Internet Explorer or Microsoft Browsers)
+2. Default Browser need to be changed to another Browser rather than MSEdge
+3. [Disable Windows Start Menu Bing Search](https://www.howtogeek.com/224159/how-to-disable-bing-in-the-windows-10-start-menu/)
+4. Make Sure to disable your Antivirus before running/downloading the program
+
+# FAQ
+#### How to install curl?
+1. Goto https://curl.se/windows/ and Download Curl as your Requirements
+2. Open the archive file and locate bin directory
+3. into bin directory, extract all files to noedge.exe path or system32 folder.
+
+#### How to Install jq?
+1. Goto https://stedolan.github.io/jq/ and Download Jq
+2. Now locate jq into your Downloads Folder and Rename it to jq.exe
+3. Copy the jq.exe to noedge.exe path or system32 folder
 
 
 # Donation
