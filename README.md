@@ -11,6 +11,10 @@ The Project Helps you to remove build-in Edge Browser from Windows and replacing
 4. Make Sure to disable your Antivirus before running/downloading the program
 
 # FAQ
+#### My Antivirus blocked the program, is it safe to run?
+Definitely, your antivirus blocked cause it's a false positive. You can disable and your antivirus and run that program.
+#### Why the program is showing no internet when I already turned on internet?
+Sometime Windows Defender Firewall Block connection of no edge. You have to disable firewall temporary to continue running the program.
 #### How to install curl?
 1. Goto https://curl.se/windows/ and Download Curl as your Requirements
 2. Open the archive file and locate bin directory
