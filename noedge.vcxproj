@@ -132,6 +132,7 @@
     <ClCompile Include="noedge.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="compn.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
