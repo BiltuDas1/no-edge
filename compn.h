@@ -20,6 +20,9 @@ string durl = "https://github.com/BiltuDas1/no-edge/releases/latest/download/noe
 int lkey, temp_int;
 bool upgrade = true;
 
+ifstream file;
+ofstream myfile;
+
 void logo()
 {
     std::cout << "\n\n" << std::endl;
