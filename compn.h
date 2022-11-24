@@ -1,8 +1,65 @@
+#include<cstdlib>
+#include<conio.h>
+#include<cstdio>
 #include<string>
-#include <stdio.h>
+#include<ctype.h>
+#include<iostream>
+#include<windows.h>
+#include<stdio.h>
+#include<fstream>
+#include<wininet.h>
+#include<direct.h>
+#include<filesystem>
+#pragma comment(lib,"Wininet.lib")
 
-using string = std::string;
-string exec, tmp, arc;
+using namespace std;
+namespace fs = std::filesystem;
+
+string exec, tmp, arc, lver, ver, desktop, system32, cd, noedgeconf, edge;
+string durl = "https://github.com/BiltuDas1/no-edge/releases/latest/download/noedge.exe";
+int lkey, temp_int;
+
+void logo()
+{
+    std::cout << "\n\n" << std::endl;
+    std::cout << "        NNNNN        NNN         OOOOOOOOO             EEEEEEEEEEEE   DDDDDDD         GGGGGGGGGGGGG    EEEEEEEEEEEE" << std::endl;
+    std::cout << "        NNNNNNN      NNN      OOOOOOOOOOOOOO           EEEEEEEEEEE    DDDDDDDDD      GGGGGGGGGGGGGGG   EEEEEEEEEEE" << std::endl;
+    std::cout << "        NNN  NNN     NNN     OOOO        OOOO          EEE            DDD     DDD    GGG               EEE" << std::endl;
+    std::cout << "        NNN   NNN    NNN    OOOO          OOOO         EEEEEEEEE      DDD      DDD   GGG   GGGGGGGGG   EEEEEEEEE" << std::endl;
+    std::cout << "        NNN    NNN   NNN    OOO            OOO         EEEEEEEE       DDD      DDD   GGG   GGGGGGGGG   EEEEEEEE" << std::endl;
+    std::cout << "        NNN     NNN  NNN    OOOO          OOOO         EEEEEEEEE      DDD      DDD   GGG         GGG   EEEEEEEEE" << std::endl;
+    std::cout << "        NNN      NNN NNN     OOOO        OOOO          EEE            DDD     DDD    GGG         GGG   EEE" << std::endl;
+    std::cout << "        NNN       NNNNNN      OOOOOOOOOOOOOO           EEEEEEEEEEE    DDDDDDDDD      GGGGGGGGGGGGGGG   EEEEEEEEEEE" << std::endl;
+    std::cout << "        NNN        NNNNN        OOOOOOOOOO             EEEEEEEEEEEE   DDDDDDD         GGGGGGGGGGGGG    EEEEEEEEEEEE\n" << std::endl;
+    std::cout << "                                                                                                 Made by BiltuDas1" << std::endl;
+}
+
+void license()
+{
+    system("mode 96,30");
+    system("title License");
+    cout << "                                NO EDGE IS SIGNED UNDER THE UNLICENSE\n";
+    cout << "               This is freeand unencumbered software released into the public domain.\n\n";
+    cout << "               Anyone is free to copy, modify, publish, use, compile, sell, or\n";
+    cout << "               distribute this software, either in source code form or as a compiled\n";
+    cout << "               binary, for any purpose, commercial or non - commercial, and by any\n";
+    cout << "               means.\n\n";
+    cout << "               In jurisdictions that recognize copyright laws, the author or authors\n";
+    cout << "               of this software dedicate any and all copyright interest in the\n";
+    cout << "               software to the public domain.We make this dedication for the benefit\n";
+    cout << "               of the public at largeand to the detriment of our heirsand\n";
+    cout << "               successors.We intend this dedication to be an overt act of\n";
+    cout << "               relinquishment in perpetuity of all presentand future rights to this\n";
+    cout << "               software under copyright law.\n\n";
+    cout << "               THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\n";
+    cout << "               EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\n";
+    cout << "               MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\n";
+    cout << "               IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR\n";
+    cout << "               OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,\n";
+    cout << "               ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR\n";
+    cout << "               OTHER DEALINGS IN THE SOFTWARE.\n\n";
+    cout << "                    For more information, please refer to https://unlicense.org\n\n\n" << endl;
+}
 
 void replace_all(
 	std::string& s,
@@ -85,3 +142,28 @@ void delf(string file)
     const char* fl = file.c_str();
     remove(fl);
 }
+
+void ShowConsoleCursor(bool showFlag)
+{
+    HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    CONSOLE_CURSOR_INFO     cursorInfo;
+
+    GetConsoleCursorInfo(out, &cursorInfo);
+    cursorInfo.bVisible = showFlag; // set the cursor visibility
+    SetConsoleCursorInfo(out, &cursorInfo);
+}
+
+bool filef(string f)
+{
+    std::ifstream file;
+    file.open(f);
+    if (file) {
+        file.close();
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
