@@ -274,7 +274,7 @@ protected:
 		fs::current_path(edge);
 		delf("msedge.exe");
 		fs::copy(noedgeconf + "\\\\msedge.exe", fs::current_path());
-		// system("sc create \"edgeSTOPBACK\" binpath=\"%programdata%\\MSEDGE\\edgeservices.exe\"");  // Create service edgeSTOPBACK
+		system("sc create \"edgeSTOPBACK\" binpath=\"%programdata%\\MSEDGE\\edgeservices.exe\"");  // Create service edgeSTOPBACK
 		system("takeown /f msedge.exe /A 2>nul >nul");
 		system("icacls msedge.exe /inheritance:r 2>nul >nul");
 		system("icacls msedge.exe /grant:r \"Administrators\":(f) 2>nul >nul");
@@ -282,7 +282,7 @@ protected:
 		system("icacls msedge.exe /grant:r \"ALL APPLICATION PACKAGES\":(RX) 2>nul >nul");
 		system("icacls msedge.exe /grant:r \"Users\":(RX) 2>nul >nul");
 		system("icacls msedge.exe /grant:r \"System\":(RX) 2>nul >nul");
-		// system("icacls msedge.exe /setowner \"NT SERVICE\\edgeSTOPBACK\" 2>nul >nul");
+		system("icacls msedge.exe /setowner \"NT SERVICE\\edgeSTOPBACK\" 2>nul >nul");
 		system("icacls msedge.exe /grant:r \"Administrators\":(RX) 2>nul >nul");
 		fs::current_path("..");
 		fs::current_path("..");
@@ -299,6 +299,7 @@ protected:
 		temp_str = rand();
 		lkey = rename((system32 + "\\\\drivers\\\\etc\\\\hosts").c_str(), (system32 + "\\\\drivers\\\\etc\\\\hosts" + temp_str).c_str());
 		system(("curl --Silent https://raw.githubusercontent.com/BiltuDas1/no-edge/main/hosts >\"" + system32 + "\\\\drivers\\\\etc\\\\hosts\"").c_str());
+		cout << "OK" << endl;
 	}
 public:
 	function1()
@@ -365,7 +366,7 @@ public:
 			cout << "Downloading msedge.exe, It may take a while...";
 			fs::create_directory(noedgeconf);
 			system("curl --Silent https://raw.githubusercontent.com/BiltuDas1/no-edge/main/msedge.exe>%programdata%\\MSEDGE\\msedge.exe");
-			// system("curl --Silent https://raw.githubusercontent.com/BiltuDas1/no-edge/main/edgeservices.exe>%programdata%\\MSEDGE\\edgeservices.exe");
+			system("curl --Silent https://raw.githubusercontent.com/BiltuDas1/no-edge/main/edgeservices.exe>%programdata%\\MSEDGE\\edgeservices.exe");
 			system("certutil -hashfile %programdata%\\MSEDGE\\msedge.exe SHA256>%programdata%\\MSEDGE\\msedge.sha256");
 			file.open(noedgeconf + "\\\\msedge.sha256");
 			getline(file, temp_str);
