@@ -18,7 +18,7 @@ namespace fs = std::filesystem;
 string exec, tmp, arc, tver, ver, desktop, system32, cd, noedgeconf, edge, temp_str, temp_str2, type;
 string durl = "https://github.com/BiltuDas1/no-edge/releases/latest/download/noedge.exe";
 int lkey, temp_int;
-bool upgrade = true;
+bool upgrade = true, isFailed = true;
 
 ifstream file;
 ofstream myfile;
@@ -171,3 +171,7 @@ bool filef(string f)
     }
 }
 
+void failc(string a)
+{
+    system(("powershell.exe Write-Host \"" + a + "\" -Foregroundcolor Red").c_str());
+}
