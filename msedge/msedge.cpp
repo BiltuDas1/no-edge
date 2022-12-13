@@ -148,8 +148,10 @@ public:
 		else
 		{
 			WinVisible(true);
+			failc("Error: Unknown Parameter","");
 			for (int i = 0; i < *argc; i++)
 				cout << argv[i] << endl;
+			lkey = _getch();
 		}
 	}
 };
