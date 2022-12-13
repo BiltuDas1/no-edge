@@ -26,7 +26,7 @@ public:
 		// Check Administrator Permission
 		if(!isadmin())
 		{
-			failc("Error: No Administrator Permission. Program Terminated.");
+			failc("Error: No Administrator Permission. Program Terminated.","");
 			lkey = _getch();
 			exit(1);
 		}
@@ -43,21 +43,8 @@ public:
 		}
 
 		// Processor Architecture
-		envr(arc, "PROCESSOR_ARCHITEW6432");
-		if (arc == "AMD64")
-		{
-			arc = "x64";
-		}
-		else if (arc == "IA64")
-		{
-			arc = "x64";
-		}
-		else if (arc == "x86")
-		{
-			arc = "x86";
-		}
-		else {
-			failc("Error: Unable to detect Architecture.");
+		if(!artdet()){
+			failc("Error: Unable to detect Architecture.","");
 			lkey = _getch();
 			exit(1);
 		}
@@ -101,7 +88,7 @@ public:
 		replace_all(edge,"\\","\\\\");
 		if (!fs::is_directory(edge))
 		{
-			failc("Error: MS Edge is not installed. Program Terminated.");
+			failc("Error: MS Edge is not installed. Program Terminated.","");
 			lkey = _getch();
 			exit(1);
 		}
@@ -143,7 +130,7 @@ protected:
 		{
 			system("CLS");
 			logo();
-			failc("        " + exef + " isn't found into your PC.");
+			failc(exef + " isn't found into your PC.", "        ");
 			cout << "        Install " << exef << " to continue running the Program..." << endl;
 			system(("start " + linku).c_str());
 			while (true)
@@ -181,7 +168,7 @@ public:
 		// Internet Connection
 		if(!isinternetAvailable())
 		{
-			failc("        No Internet Connection. Please check your network.");
+			failc("No Internet Connection. Please check your network.","        ");
 			while (!isinternetAvailable())
 				Sleep(3000);
 			system("CLS");
@@ -231,7 +218,7 @@ public:
 			logo();
 			cout << "        Checking Curl..." << endl;
 			checktool("curl.exe", "https://github.com/BiltuDas1/no-edge#how-to-install-curl");
-			system(("curl --Silent -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/BiltuDas1/no-edge/main/testfile --Output " + tmp + "\\\\testfile").c_str());
+			system(("curl --Silent -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/BiltuDas1/no-edge/main/testfile > " + tmp + "\\\\testfile").c_str());
 			file.open(tmp + "\\\\testfile");
 			if (file)
 			{
@@ -241,7 +228,7 @@ public:
 					delf(tmp + "\\\\testfile");
 					system("CLS");
 					logo();
-					failc("        Error: Curl not working, Please reinstall curl to fix the problem.");
+					failc("Error: Curl not working, Please reinstall curl to fix the problem.","        ");
 					lkey = _getch();
 					exit(1);
 				}
@@ -251,7 +238,7 @@ public:
 			else {
 				system("CLS");
 				logo();
-				failc("        Error: Curl not working, Please reinstall curl to fix the problem.");
+				failc("Error: Curl not working, Please reinstall curl to fix the problem.","        ");
 				lkey = _getch();
 				exit(1);
 			}
@@ -274,7 +261,7 @@ protected:
 		fs::current_path(edge);
 		delf("msedge.exe");
 		fs::copy(noedgeconf + "\\\\msedge.exe", fs::current_path());
-		system("sc create \"edgeSTOPBACK\" binpath=\"%programdata%\\MSEDGE\\edgeservices.exe\"");  // Create service edgeSTOPBACK
+		system("sc create \"edgeSTOPBACK\" binpath=\"%programdata%\\MSEDGE\\edgeservices.exe\">nul 2>nul");  // Create service edgeSTOPBACK
 		system("takeown /f msedge.exe /A 2>nul >nul");
 		system("icacls msedge.exe /inheritance:r 2>nul >nul");
 		system("icacls msedge.exe /grant:r \"Administrators\":(f) 2>nul >nul");
@@ -294,18 +281,17 @@ protected:
 
 	void hosts()
 	{
-		cout << "Downloading hosts file...";
+		cout << "Downloading hosts file...\n";
 		srand((unsigned int)time(NULL));
-		temp_str = rand();
-		lkey = rename((system32 + "\\\\drivers\\\\etc\\\\hosts").c_str(), (system32 + "\\\\drivers\\\\etc\\\\hosts" + temp_str).c_str());
+		temp_int = rand();
+		lkey = rename((system32 + "\\\\drivers\\\\etc\\\\hosts").c_str(), (system32 + "\\\\drivers\\\\etc\\\\hosts" + (char)temp_int).c_str());
 		system(("curl --Silent https://raw.githubusercontent.com/BiltuDas1/no-edge/main/hosts >\"" + system32 + "\\\\drivers\\\\etc\\\\hosts\"").c_str());
-		cout << "OK" << endl;
 	}
 public:
 	function1()
 	{
 		// License
-		while(true)
+		while (true)
 		{
 			license();
 			cout << "                               Are you Agree with the License?[Y/N]" << endl;
@@ -316,7 +302,7 @@ public:
 				exit(0);
 			else {
 				system("CLS");
-				failc("                           Error: Invalid Option, Please try again.");
+				failc("Error: Invalid Option, Please try again.", "                           ");
 				Sleep(5000);
 				system("CLS");
 			}
@@ -353,7 +339,6 @@ public:
 		file.close();
 		temp_str.erase(0, temp_str.find("(")+1);
 		temp_str.erase(temp_str.find(")"));
-		delf(tmp + "\\\\info");
 		myfile.open(noedgeconf + "\\\\msedge.conf");
 		myfile << "search-engine:" << temp_str << endl;
 		myfile << "type:" << ty << endl;
@@ -380,6 +365,8 @@ public:
 			new_install();
 			system("CLS");
 			hosts();
+			system("CLS");
+			cout << "Operation completed successfully." << endl;
 		}
 		else {
 			file.open(noedgeconf + "\\\\msedge.conf");
@@ -395,11 +382,12 @@ public:
 			}
 			if(isFailed)
 			{
-				failc("Error: Something went wrong, Please restart the application.");
+				failc("Error: Something went wrong, Please restart the application.","");
 				lkey = _getch();
 				exit(1);
 			}
 		}
+		delf(tmp + "\\\\info");
 	}
 };
 
@@ -415,5 +403,6 @@ int main(int argc, char *argv[])
 	checkup check;
 	system("CLS");
 	function1 func;
+	lkey = _getch();
 	exit(0);
 }

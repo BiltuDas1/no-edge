@@ -97,18 +97,7 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
-noedge.vcxproj
-noedge.vcxproj.filters
-noedge.vcxproj.user
-*.rc
-noedge.sln
-resource.h
-**/*.vcxproj
-**/*.vcxproj.filters
-**/*.vcxproj.user
-**/*.rc
-**/*.sln
-**/resource.h
+
 
 # Chutzpah Test files
 _Chutzpah*
