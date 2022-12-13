@@ -97,11 +97,11 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
-*.vcxproj
-*.vcxproj.filters
-*.vcxproj.user
+noedge.vcxproj
+noedge.vcxproj.filters
+noedge.vcxproj.user
 *.rc
-*.sln
+noedge.sln
 resource.h
 **/*.vcxproj
 **/*.vcxproj.filters
