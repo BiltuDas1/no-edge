@@ -7,7 +7,7 @@ The Project Helps you to remove build-in Edge Browser from Windows and replacing
 # Pre-Requesting
 1. Another Browser like firefox, chromium etc. (Don't choose Internet Explorer or Microsoft Browsers)
 2. Default Browser need to be changed to another Browser rather than MSEdge
-3. [Disable Windows Start Menu Bing Search](https://www.howtogeek.com/224159/how-to-disable-bing-in-the-windows-10-start-menu/)
+3. [Disable Windows Start Menu Bing Search](https://www.howtogeek.com/224159/how-to-disable-bing-in-the-windows-10-start-menu/)  (only for 1.1.0.8 or below)
 4. Make Sure to disable your Antivirus before running/downloading the program
 
 # FAQ
@@ -20,11 +20,14 @@ Sometime Windows Defender Firewall Block connection of no edge. You have to disa
 2. Open the archive file and locate bin directory
 3. into bin directory, extract all files to noedge.exe path or system32 folder.
 
-#### How to Install jq?
+#### How to Install jq (Not applicable for 1.1.0.9 or above)?
 1. Goto https://stedolan.github.io/jq/ and Download Jq
 2. Now locate jq into your Downloads Folder and Rename it to jq.exe
 3. Copy the jq.exe to noedge.exe path or system32 folder
 
+
+# Building from Source
+Check [building.md](building.md) for building instructions
 
 # Donation
 If you like my work then you can support me by donating into following addresses.
