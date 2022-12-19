@@ -111,9 +111,25 @@ protected:
 		return (ret);
 	}
 
-	string SEngine(string str)
+	void Default(string str)
 	{
-		return str;
+		if (grep(str, "&form="))
+			str.erase(str.find("&form="));
+		replace_all(str, "www.bing.com/search?q=", se);
+		if (type == "5")
+			temp_str = str + ".html";
+		system(("explorer.exe \"" + str + "\"").c_str());
+	}
+
+	void Redirect(string str)
+	{
+		system(("explorer.exe \"" + str +"\"").c_str());
+	}
+
+	void Video(string str)
+	{
+		str.erase(0, str.find("&url=")+5);
+		system(("explorer.exe \"" + urlDecode(str) +"\"").c_str());
 	}
 
 public:
@@ -129,6 +145,7 @@ public:
 		else if (grep(argv[1], "--edge-redirect"))
 		{
 			temp_str = argv[2];
+			// Decoding Url
 			if (grep(temp_str, "microsoft-edge:?url="))
 			{
 				temp_str.erase(0, 20);
@@ -138,12 +155,12 @@ public:
 			{
 				temp_str.erase(0, 15);
 			}
-			if(grep(temp_str, "&form="))
-				temp_str.erase(temp_str.find("&form="));
-			replace_all(temp_str, "www.bing.com/search?q=", se);
-			if (type == "5")
-				temp_str = temp_str + ".html";
-			system(("explorer.exe \"" + SEngine(temp_str) + "\"").c_str());
+			if (grep(temp_str, "https://www.bing.com/WS/redirect/"))
+				Redirect(temp_str);
+			else if (grep(temp_str, "Microsoft.Windows.Cortana_cw5n1h2txyewy"))
+				Video(temp_str);
+			else
+				Default(temp_str);
 		}
 		else
 		{
