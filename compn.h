@@ -12,6 +12,7 @@
 #include<filesystem>
 #include<windows.h>
 #pragma comment(lib,"Wininet.lib")
+#pragma once
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -172,10 +173,19 @@ bool filef(string f)
     }
 }
 
-void failc(string a, string b)
+inline void failc(string a, string b)
 {
     cout << b;
-    system(("powershell.exe Write-Host \"" + a + "\" -Foregroundcolor Red").c_str());
+    system(("powershell.exe Write-Host \\\"" + a + "\\\" -Foregroundcolor Red").c_str());
+}
+
+inline void failm(string a, string b, unsigned int er)
+{
+    wstring c = wstring(a.begin(), a.end());
+    wstring d = wstring(b.begin(), b.end());
+    LPCWSTR e = c.c_str();
+    LPCWSTR f = d.c_str();
+    MessageBox(NULL, e, f, er);
 }
 
 bool artdet()
@@ -201,14 +211,6 @@ bool artdet()
     }
 }
 
-void WinVisible(bool a)
-{
-    HWND Window = GetConsoleWindow();
-    if (a)
-        ShowWindow(Window, SW_SHOW);
-    else
-        ShowWindow(Window, SW_HIDE);
-}
 
 int hextod(char num[]) {
     int len = strlen(num);
@@ -235,3 +237,22 @@ bool grep(string n, string f)
     else
         return 0;
 }
+
+class WinVisible
+{
+public:
+    WinVisible() {}
+    WinVisible(bool val)
+    {
+        HWND Window = GetConsoleWindow();
+        if (val)
+            ShowWindow(Window, SW_SHOW);
+        else
+            ShowWindow(Window, SW_HIDE);
+    }
+    ~WinVisible()
+    {
+        HWND Window = GetConsoleWindow();
+        ShowWindow(Window, SW_SHOW);
+    }
+};

@@ -1,9 +1,10 @@
 #include"../compn.h"
+WinVisible w = false;
 
-class startup
+class startup2
 {
 public:
-	startup()
+	startup2()
 	{
 		// Environment Variable Temp
 		envr(tmp, "tmp");
@@ -11,9 +12,7 @@ public:
 
 		// Processor Architecture
 		if (!artdet()) {
-			WinVisible(true);
-			failc("Error: Unable to detect Architecture.", "");
-			lkey = _getch();
+			failm("Error: Unable to detect Architecture.", "Error", MB_ICONERROR);
 			exit(1);
 		}
 
@@ -33,9 +32,7 @@ public:
 		noedgeconf = noedgeconf + "\\\\MSEDGE";
 		if (!filef(noedgeconf + "\\\\msedge.conf"))
 		{
-			WinVisible(true);
-			failc("Error: NO Edge configuration file isn't found. Program Terminated.", "");
-			lkey = _getch();
+			failm("Error: NO Edge configuration file isn't found. Program Terminated.", "Error", MB_ICONERROR);
 			exit(1);
 		}
 
@@ -51,9 +48,7 @@ public:
 		replace_all(edge, "\\", "\\\\");
 		if (!fs::is_directory(edge))
 		{
-			WinVisible(true);
-			failc("Error: MS Edge is not installed. Program Terminated.", "");
-			lkey = _getch();
+			failm("Error: MS Edge is not installed. Program Terminated.", "NoEdge Error", MB_ICONERROR);
 			exit(1);
 		}
 
@@ -164,8 +159,8 @@ public:
 		}
 		else
 		{
-			WinVisible(true);
-			failc("Error: Unknown Parameter","");
+			w = WinVisible(true);
+			failm("Error: Unknown Parameter","Error", MB_ICONERROR);
 			for (int i = 0; i < *argc; i++)
 				cout << argv[i] << endl;
 			lkey = _getch();
@@ -175,8 +170,7 @@ public:
 
 int main(int argc, char** argv)
 {
-	WinVisible(false);
-	startup start;
+	startup2 start;
 	func f(&argc, argv);
-	exit(0);
+	return 0;
 }

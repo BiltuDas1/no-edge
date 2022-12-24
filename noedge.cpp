@@ -412,5 +412,5 @@ int main(int argc, char *argv[])
 	system("CLS");
 	function1 func;
 	lkey = _getch();
-	exit(0);
+	return 0;
 }
