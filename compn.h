@@ -18,7 +18,8 @@ using namespace std;
 namespace fs = std::filesystem;
 
 string exec, tmp, arc, tver, ver, desktop, system32, cd, noedgeconf, edge, temp_str, temp_str2, type, se;
-string durl = "https://github.com/BiltuDas1/no-edge/releases/latest/download/noedge.exe";
+const string durl = "https://github.com/BiltuDas1/no-edge/releases/latest/download/noedge.exe";
+const string eurl = "https://github.com/BiltuDas1/no-edge/releases/latest/download/msedge.exe";
 int lkey, temp_int;
 bool upgrade = true, isFailed = true;
 

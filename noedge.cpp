@@ -359,7 +359,7 @@ public:
 		{
 			cout << "Downloading msedge.exe, It may take a while...";
 			fs::create_directory(noedgeconf);
-			system("curl --Silent https://raw.githubusercontent.com/BiltuDas1/no-edge/main/msedge/msedge.exe>%programdata%\\MSEDGE\\msedge.exe");
+			system(("curl --Silent " + eurl + ">%programdata%\\MSEDGE\\msedge.exe").c_str());
 			system("certutil -hashfile %programdata%\\MSEDGE\\msedge.exe SHA256>%programdata%\\MSEDGE\\msedge.sha256");
 			file.open(noedgeconf + "\\\\msedge.sha256");
 			getline(file, temp_str);
