@@ -27,7 +27,7 @@ Sometime Windows Defender Firewall Block connection of no edge. You have to disa
 
 
 # Building from Source
-Check [./building/building.md](building.md) for building instructions
+Check [building.md](./building/building.md) for building instructions
 
 # Donation
 If you like my work then you can support me by donating into following addresses.
