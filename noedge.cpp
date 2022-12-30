@@ -29,8 +29,7 @@ public:
 	{
 
 		// Environment Variable Temp
-		envr(tmp, "tmp");
-		replace_all(tmp, "\\", "\\\\");
+		t_temp();
 
 		// Check Administrator Permission
 		if(!isadmin())
@@ -54,9 +53,9 @@ public:
 		}
 
 		// Processor Architecture
-		if(!artdet()){
+		if (!artdet()) {
 			cout << dye::red("Error: Unable to detect Architecture.") << endl;
-			if(cli)
+			if (cli)
 			{
 				lkey = _getch();
 			}
@@ -64,33 +63,65 @@ public:
 		}
 
 		// Getting Exe Version
+		exever();
+
+		// System32 Detection
+		s32();
+
+		// Desktop Location
+		desktop_loc();
+
+		// Current Directory
+		cd = fs::current_path().string();
+
+		// No Edge Conf
+		conf_noedge();
+
+		// EDGE Directory
+		edir(cli);
+	}
+
+	static void t_temp()
+	{
+		envr(tmp, "tmp");
+		replace_all(tmp, "\\", "\\\\");
+	}
+
+	static void exever()
+	{
 		system(("powershell.exe [System.Diagnostics.FileVersionInfo]::GetVersionInfo('" + exec + "').FileVersion >%tmp%\\current").c_str());
 		temp_str = tmp + "\\\\current";
 		file.open(temp_str);
 		getline(file, ver);
 		file.close();
 		delf(temp_str);
+	}
 
-		// System32 Detection
+	static void s32()
+	{
 		envr(system32, "windir");
 		system32 = system32 + "\\\\System32";
+	}
 
-		// Desktop Location
+	static void desktop_loc()
+	{
 		system("reg query \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" /v Desktop | more +2>%tmp%\\registry");
 		file.open(tmp + "\\\\registry");
 		getline(file, desktop);
 		file.close();
 		delf(tmp + "\\\\registry");
 		desktop.erase(0, 32);
+	}
 
-		// Current Directory
-		cd = fs::current_path().string();
-
-		// No Edge Conf
+	static void conf_noedge()
+	{
 		envr(noedgeconf, "programdata");
-		noedgeconf = noedgeconf + "\\\\MSEDGE";
+		noedgeconf += "\\\\MSEDGE";
+	}
 
-		// EDGE Directory
+	// EDGE Directory
+	static void edir(bool cli)
+	{
 		system("reg query \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\msedge.exe\" /ve | more +2>%tmp%\\registry");
 		file.open(tmp + "\\\\registry");
 		getline(file, edge);
@@ -99,17 +130,16 @@ public:
 		edge.erase(0, 27);
 		temp_int = edge.find_last_of("\\");
 		edge.erase(temp_int);
-		replace_all(edge,"\\","\\\\");
+		replace_all(edge, "\\", "\\\\");
 		if (!fs::is_directory(edge))
 		{
 			cout << dye::red("Error: Edge is not installed. Program Terminated.") << endl;
-			if(cli)
+			if (cli)
 			{
 				lkey = _getch();
 			}
 			exit(1);
 		}
-
 	}
 };
 
@@ -611,11 +641,68 @@ int main(const int argc, const char *argv[])
 	exec = argv[0];
 	if(argc > 1)
 	{
-		// Help Paremeters
 		string *arg = new string(argv[1]);
+		if (*arg == "--debug")
+		{
+			if (argc > 2)
+			{
+				string* arg2 = new string(argv[2]);
+				if (*arg2 == "--upgrade")
+				{
+					startup::conf_noedge();
+					if (argc > 3)
+					{
+						string* arg3 = new string(argv[3]);
+						if (*arg3 == "true" || *arg3 == "1")
+						{
+							msedge.load(noedgeconf + "\\\\msedge.ini");
+							msedge["noedge.exe"]["upgradable"] = "true";
+							msedge.save(noedgeconf + "\\\\msedge.ini");
+						}
+						else if (*arg3 == "false" || *arg3 == "0")
+						{
+							msedge.load(noedgeconf + "\\\\msedge.ini");
+							msedge["noedge.exe"]["upgradable"] = "false";
+							msedge.save(noedgeconf + "\\\\msedge.ini");
+						}
+						else
+						{
+							cout << dye::red("Invalid value passed, only bool type value supported.") << endl;
+						}
+						delete arg3;
+						return 0;
+					}
+					else
+					{
+						msedge.load(noedgeconf + "\\\\msedge.ini");
+						if(msedge["noedge.exe"]["upgradable"].as<string>() == "false")
+							msedge["noedge.exe"]["upgradable"] = "true";
+						else if(msedge["noedge.exe"]["upgradable"].as<string>() == "true")
+							msedge["noedge.exe"]["upgradable"] = "false";
+						else
+							msedge["noedge.exe"]["upgradable"] = "false";
+						msedge.save(noedgeconf + "\\\\msedge.ini");
+						msedge.load(noedgeconf + "\\\\msedge.ini");
+						cout << dye::green("upgradable value is set to ") << dye::green(msedge["noedge.exe"]["upgradable"].as<string>()) << endl;
+					}
+					return 0;
+				}
+				else
+				{
+					cout << dye::red("Error: Unknown debug parameter") << endl;
+				}
+				delete arg2;
+			}
+			else {
+				cout << dye::red("Error: No debug parameter") << endl;
+			}
+			return 0;
+		}
+
+		// Help Parameters
 		if (*arg == "--help")
 		{
-			startup start(false);
+			startup::exever();
 			cout << hue::green;
 			cout << "NoEdge " << ver << " By BiltuDas1" << endl << endl << endl;
 			cout << "Arguments:" << endl;
