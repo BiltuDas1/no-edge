@@ -1,7 +1,7 @@
 # The NO Edge Project
 The Project Helps you to remove build-in Edge Browser from Windows and replacing another Browser instead of Edge
 
-**Note: Now This repo doesn't work with NoEdge 1.1.0.9 or before, if you still want to use older version then check [no-edge/before](/tree/before) branch.**
+**Note: Now This repo doesn't work with NoEdge 1.1.0.9 or before, if you still want to use older version then check [no-edge/before](https://github.com/BiltuDas1/no-edge/tree/before) branch.**
 
 # Pre-Requesting
 * Another Browser like Firefox, Chrome, Chromium etc. (Don't choose Internet Explorer or Microsoft Browsers)
