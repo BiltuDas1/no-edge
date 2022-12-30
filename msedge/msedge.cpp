@@ -1,4 +1,4 @@
-#include"../compn.h"
+#include"../include/compn.h"
 WinVisible w = false;
 
 class startup2
@@ -12,7 +12,7 @@ public:
 
 		// Processor Architecture
 		if (!artdet()) {
-			failm("Error: Unable to detect Architecture.", "Error", MB_ICONERROR);
+			failm("Error: Unable to detect Architecture.", "NoEdge Error", MB_ICONERROR);
 			exit(1);
 		}
 
@@ -30,9 +30,9 @@ public:
 		// No Edge Conf
 		envr(noedgeconf, "programdata");
 		noedgeconf = noedgeconf + "\\\\MSEDGE";
-		if (!filef(noedgeconf + "\\\\msedge.conf"))
+		if (!filef(noedgeconf + "\\\\msedge.ini"))
 		{
-			failm("Error: NO Edge configuration file isn't found. Program Terminated.", "Error", MB_ICONERROR);
+			failm("Error: NO Edge configuration file isn't found. Program Terminated.", "NoEdge Error", MB_ICONERROR);
 			exit(1);
 		}
 
@@ -53,35 +53,8 @@ public:
 		}
 
 		// No Edge Configuration
-		file.open(noedgeconf + "\\\\msedge.conf");
-		getline(file, se);
-		se.erase(0, se.find(":")+1);
-		getline(file, type);
-		type.erase(0, type.find(":")+1);
-		file.close();
-		temp_int = stoi(type);
-		switch (temp_int)
-		{
-		case 1:
-			se = se + "/search?q=";
-			break;
-		case 2:
-			se = se + "/?q=";
-			break;
-		case 3:
-			se = se + "/search/?text=";
-			break;
-		case 4:
-			se = se + "/web?query=";
-			break;
-		case 5:
-			se = se + "/s/";
-			break;
-		case 6:
-			se = se + "/serp?q=";
-			break;
-		default: exit(1);
-		}
+		msedge.load(noedgeconf + "\\\\msedge.ini");
+		se = "https://" + msedge["msedge.exe"]["url"].as<string>() + msedge["msedge.exe"]["parameters"].as<string>();
 	}
 };
 
@@ -110,9 +83,12 @@ protected:
 	{
 		if (grep(str, "&form="))
 			str.erase(str.find("&form="));
-		replace_all(str, "www.bing.com/search?q=", se);
-		if (type == "5")
-			temp_str = str + ".html";
+		if (grep(str, "https://www.bing.com/search?q="))
+		{
+			replace_all(str, "https://www.bing.com/search?q=", "");
+			replace_all(se, "$query$", str);
+			str = se;
+		}
 		system(("explorer.exe \"" + str + "\"").c_str());
 	}
 
@@ -133,7 +109,7 @@ public:
 		// No Parameters
 		if(*argc == 1)
 			system("explorer.exe \"https://github.com/BiltuDas1\"");
-		// Default Browser Prompt
+		// Default Browser Parameter
 		else if (grep(argv[1], "--default-search-provider"))
 			exit(0);
 		// Redirecting link to default browser
@@ -150,6 +126,7 @@ public:
 			{
 				temp_str.erase(0, 15);
 			}
+
 			if (grep(temp_str, "https://www.bing.com/WS/redirect/"))
 				Redirect(temp_str);
 			else if (grep(temp_str, "Microsoft.Windows.Cortana_cw5n1h2txyewy"))
@@ -170,6 +147,7 @@ public:
 
 int main(int argc, char** argv)
 {
+	system("title Microsoft Edge debug screen");
 	startup2 start;
 	func f(&argc, argv);
 	return 0;
