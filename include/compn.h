@@ -11,6 +11,8 @@
 #include<direct.h>
 #include<filesystem>
 #include<windows.h>
+#include<ctime>
+#include"inicpp.h"
 #pragma comment(lib,"Wininet.lib")
 #pragma once
 
@@ -21,10 +23,11 @@ string exec, tmp, arc, tver, ver, desktop, system32, cd, noedgeconf, edge, temp_
 const string durl = "https://github.com/BiltuDas1/no-edge/releases/latest/download/noedge.exe";
 const string eurl = "https://github.com/BiltuDas1/no-edge/releases/latest/download/msedge.exe";
 int lkey, temp_int;
-bool upgrade = true, isFailed = true;
+bool upgrade, isFailed = true;
 
 ifstream file;
 ofstream myfile;
+ini::IniFile msedge;
 
 void logo()
 {
@@ -174,12 +177,6 @@ bool filef(string f)
     }
 }
 
-inline void failc(string a, string b)
-{
-    cout << b;
-    system(("powershell.exe Write-Host \\\"" + a + "\\\" -Foregroundcolor Red").c_str());
-}
-
 inline void failm(string a, string b, unsigned int er)
 {
     wstring c = wstring(a.begin(), a.end());
@@ -257,3 +254,12 @@ public:
         ShowWindow(Window, SW_SHOW);
     }
 };
+
+bool if_match(char *val, string val2)
+{
+    string a = val;
+    if (a == val2)
+        return true;
+    else
+        return false;
+}
