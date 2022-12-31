@@ -501,18 +501,18 @@ public:
 			// Checks if Valid or not
 			if (fs::exists(*pth + "/Edge") && fs::exists(*pth + "/EdgeCore") && fs::exists(*pth + "/EdgeUpdate"))
 			{
-				cout << endl;
+				cout << "\n";
 			}
 			// Checks If only backupping up msedge.exe
 			else if (distance(fs::directory_iterator(*pth), fs::directory_iterator{}) == 1 && fs::exists(*pth + "/Edge/Application/msedge.exe") && distance(fs::directory_iterator(*pth + "/Edge/Application"), fs::directory_iterator{}) == 1)
 			{
 				*mse = true;
-				cout << dye::yellow("(msedge.exe)") << hue::green << endl;
+				cout << dye::yellow("(msedge.exe)") << hue::green << "\n";
 			}
 			else
 			{
 				*invalid += to_string(*i);
-				cout << dye::red("(Invalid)") << hue::green << endl;
+				cout << dye::red("(Invalid)") << hue::green << "\n";
 			}
 		}
 		delete pth;
@@ -693,21 +693,67 @@ public:
 				cout << dye::green("upgradable value is set to ") << dye::green(msedge["noedge.exe"]["upgradable"].as<string>()) << endl;
 			}
 		}
-		// Parameter --offline
-		else if (*arg2 == "--offline")
+		else
+		{
+			cout << dye::red("Error: Unknown debug parameter") << endl;
+		}
+		delete arg2;
+	}
+};
+
+class extra
+{
+public:
+	extra(const int argc, const char* argv[])
+	{
+		// Debug parameter
+		string* arg = new string(argv[1]);
+		if (*arg == "--debug")
+		{
+			if (argc > 2)
+			{
+				debug* d = new debug(argc, argv);
+				delete d;
+			}
+			else
+				cout << dye::red("Error: No debug parameter") << endl;
+		}
+		// Help parameter
+		else if (*arg == "--help")
+		{
+			cout << hue::green;
+			cout << argv[0] << " <Parameters>\n";
+			cout << "Parameters:\n";
+			cout << "--help           Opens help window\n";
+			cout << "--offline jsonFile=<file>\n";
+			cout << "                 Run noedge in offline mode, <file> is the filepath of\n";
+			cout << "                 search.json, check official repo for more information.\n";
+			cout << "--online         Inverse of offline\n";
+			cout << "--recovery       Restores msedge to previous state";
+			cout << hue::reset << endl;
+		}
+		// Recovery parameter
+		else if (*arg == "--recovery")
+		{
+			startup start(false);
+			recovery* recover = new recovery;
+			delete recover;
+		}
+		// offline parameter
+		else if (*arg == "--offline")
 		{
 			startup::conf_noedge();
-			if (argc > 3)
+			if (argc > 2)
 			{
-				string* arg3 = new string(argv[3]);
-				*arg3 = strlow(*arg3);
-				if (grep(*arg3, "jsonfile="))
+				string* arg2 = new string(argv[2]);
+				*arg2 = strlow(*arg2);
+				if (grep(*arg2, "jsonfile="))
 				{
-					replace_all(*arg3, "jsonfile=", "");
+					replace_all(*arg2, "jsonfile=", "");
 					startup::t_temp();
 					startup::conf_noedge();
-					try{
-						if (fs::copy_file(*arg3, tmp + "\\\\search.json", fs::copy_options::overwrite_existing))
+					try {
+						if (fs::copy_file(*arg2, tmp + "\\\\search.json", fs::copy_options::overwrite_existing))
 						{
 							msedge.load(noedgeconf + "\\\\msedge.ini");
 							msedge["noedge.exe"]["offline"] = true;
@@ -721,16 +767,17 @@ public:
 				}
 				else
 					cout << dye::red("Error: Json file path is not provided") << endl;
-				delete arg3;
+				delete arg2;
 			}
 			else
 				cout << dye::red("Error: Json file path is not provided") << endl;
 		}
-		else if (*arg2 == "--online")
+		// disable offline parameter
+		else if (*arg == "--online")
 		{
 			startup::conf_noedge();
 			msedge.load(noedgeconf + "\\\\msedge.ini");
-			try{
+			try {
 				if (msedge["noedge.exe"]["offline"].as<bool>())
 				{
 					msedge["noedge.exe"]["offline"] = false;
@@ -745,10 +792,8 @@ public:
 			}
 		}
 		else
-		{
-			cout << dye::red("Error: Unknown debug parameter") << endl;
-		}
-		delete arg2;
+			cout << dye::red("Error: Parameter not found") << endl;
+		delete arg;
 	}
 };
 
@@ -758,40 +803,9 @@ int main(const int argc, const char *argv[])
 	exec = argv[0];
 	if(argc > 1)
 	{
-		string *arg = new string(argv[1]);
-		if (*arg == "--debug")
-		{
-			if (argc > 2)
-			{
-				debug* d = new debug(argc, argv);
-				delete d;
-			}
-			else {
-				cout << dye::red("Error: No debug parameter") << endl;
-			}
-			return 0;
-		}
-
-		// Help Parameters
-		if (*arg == "--help")
-		{
-			cout << hue::green;
-			cout << "Arguments:" << endl;
-			cout << "--recovery       Restores msedge to previous state" << endl;
-			cout << "--help           Opens help window" << endl;
-			cout << hue::reset << endl;
-			return 0;
-		}
-
-		// External Parameters
-		if (*arg == "--recovery")
-		{
-			startup start(false);
-			recovery* recover = new recovery;
-			delete recover;
-			return 0;
-		}
-		delete arg;
+		extra *e = new extra(argc, argv);
+		delete e;
+		return 0;
 	}
 	ShowConsoleCursor(false);
     system("mode 120,30");
