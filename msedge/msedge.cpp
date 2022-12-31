@@ -43,7 +43,7 @@ public:
 		file.close();
 		delf(tmp + "\\\\registry");
 		edge.erase(0, 27);
-		temp_int = edge.find_last_of("\\");
+		temp_int = (int)edge.find_last_of("\\");
 		edge.erase(temp_int);
 		replace_all(edge, "\\", "\\\\");
 		if (!fs::is_directory(edge))
@@ -54,7 +54,14 @@ public:
 
 		// No Edge Configuration
 		msedge.load(noedgeconf + "\\\\msedge.ini");
-		se = "https://" + msedge["msedge.exe"]["url"].as<string>() + msedge["msedge.exe"]["parameters"].as<string>();
+		try{
+			se = "https://" + msedge["msedge.exe"]["url"].as<string>() + msedge["msedge.exe"]["parameters"].as<string>();
+		}
+		catch (...)
+		{
+			failm("Error: Incorrect configuration found into msedge.ini. Program Terminated.", "NoEdge Error", MB_ICONERROR);
+			exit(1);
+		}
 	}
 };
 

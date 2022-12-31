@@ -211,7 +211,7 @@ bool artdet()
 
 
 int hextod(char num[]) {
-    int len = strlen(num);
+    int len = (int)strlen(num);
     int base = 1;
     int temp = 0;
     for (int i = len - 1; i >= 0; i--) {
@@ -262,4 +262,13 @@ bool if_match(char *val, string val2)
         return true;
     else
         return false;
+}
+
+string strlow(string eb)
+{
+    for (unsigned int i = 0;i < eb.length();i++)
+    {
+        eb[i] = tolower(eb[i]);
+    }
+    return eb;
 }

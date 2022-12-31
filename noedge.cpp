@@ -9,6 +9,8 @@ using namespace rapidjson;
 time_t tt;
 struct tm ti;
 
+void once();
+
 class startup
 {
 protected:
@@ -63,7 +65,11 @@ public:
 		}
 
 		// Getting Exe Version
-		exever();
+		system(("powershell.exe [System.Diagnostics.FileVersionInfo]::GetVersionInfo('" + exec + "').FileVersion >%tmp%\\current").c_str());
+		file.open(tmp + "\\\\current");
+		getline(file, ver);
+		file.close();
+		delf(tmp + "\\\\current");
 
 		// System32 Detection
 		s32();
@@ -85,16 +91,6 @@ public:
 	{
 		envr(tmp, "tmp");
 		replace_all(tmp, "\\", "\\\\");
-	}
-
-	static void exever()
-	{
-		system(("powershell.exe [System.Diagnostics.FileVersionInfo]::GetVersionInfo('" + exec + "').FileVersion >%tmp%\\current").c_str());
-		temp_str = tmp + "\\\\current";
-		file.open(temp_str);
-		getline(file, ver);
-		file.close();
-		delf(temp_str);
 	}
 
 	static void s32()
@@ -128,7 +124,7 @@ public:
 		file.close();
 		delf(tmp + "\\\\registry");
 		edge.erase(0, 27);
-		temp_int = edge.find_last_of("\\");
+		temp_int = (int)edge.find_last_of("\\");
 		edge.erase(temp_int);
 		replace_all(edge, "\\", "\\\\");
 		if (!fs::is_directory(edge))
@@ -257,9 +253,9 @@ public:
 		file.close();
 		delf(tmp + "\\\\update");
 		msedge.load(noedgeconf + "\\\\msedge.ini");
-		if (msedge["noedge.exe"]["upgradable"].as<string>() == "false")
+		if (msedge["noedge.exe"]["upgradable"].as<bool>() == false)
 			upgrade = false;
-		if (msedge["noedge.exe"]["upgradable"].as<string>() == "true")
+		if (msedge["noedge.exe"]["upgradable"].as<bool>() == false)
 			upgrade = true;
 		temp_int = versionCompare(msedge["noedge.exe"]["version"].as<string>(), ver);
 		if (temp_int == 1 || temp_int == 0 && upgrade == false)
@@ -415,7 +411,7 @@ public:
 		lkey = doc["elements"][temp_int - 1]["query"].GetInt();
 		msedge["msedge.exe"]["parameters"] = doc["query"][lkey-1].GetString();
 		msedge["noedge.exe"]["version"] = ver;
-		msedge["noedge.exe"]["upgradable"] = "false";
+		msedge["noedge.exe"]["upgradable"] = false;
 		msedge.save(noedgeconf + "\\\\msedge.ini");
 
 		// upgrade\fresh installation
@@ -450,19 +446,30 @@ public:
 		}
 		else {
 			msedge.load(noedgeconf + "\\\\msedge.ini");
-			if (msedge["noedge.exe"]["version"].as<string>() == ver)
-			{
-				cout << "Success: Setting Applied Successfully." << endl;
-				lkey = _getch();
-				exit(0);
+			try{
+				if (msedge["noedge.exe"]["version"].as<string>() == ver)
+				{
+					cout << "Success: Setting Applied Successfully." << endl;
+					lkey = _getch();
+				}
+				else
+					throw 1;
 			}
-			else{
+			catch(...){
 				cout << dye::red("Error: Something went wrong, Please restart the application.") << hue::green << endl;
 				lkey = _getch();
-				exit(1);
 			}
 		}
-		delf(tmp + "\\\\search.json");
+		msedge.load(noedgeconf + "\\\\msedge.ini");
+		try{
+			if (msedge["noedge.exe"]["offline"].as<bool>())
+				exit(0);
+			else
+				throw 1;
+		}
+		catch (...) {
+			delf(tmp + "\\\\search.json");
+		}
 	}
 };
 
@@ -636,6 +643,116 @@ public:
 	}
 };
 
+class debug
+{
+public:
+	debug(const int argc, const char *argv[])
+	{
+		string* arg2 = new string(argv[2]);
+		// Parameter --upgrade
+		if (*arg2 == "--upgrade")
+		{
+			startup::conf_noedge();
+			if (argc > 3)
+			{
+				string* arg3 = new string(argv[3]);
+				if (*arg3 == "true" || *arg3 == "1")
+				{
+					msedge.load(noedgeconf + "\\\\msedge.ini");
+					msedge["noedge.exe"]["upgradable"] = true;
+					msedge.save(noedgeconf + "\\\\msedge.ini");
+				}
+				else if (*arg3 == "false" || *arg3 == "0")
+				{
+					msedge.load(noedgeconf + "\\\\msedge.ini");
+					msedge["noedge.exe"]["upgradable"] = false;
+					msedge.save(noedgeconf + "\\\\msedge.ini");
+				}
+				else
+				{
+					cout << dye::red("Invalid value passed, only bool type value supported.") << endl;
+				}
+				delete arg3;
+			}
+			else
+			{
+				msedge.load(noedgeconf + "\\\\msedge.ini");
+				try{
+					if (msedge["noedge.exe"]["upgradable"].as<bool>() == false)
+						msedge["noedge.exe"]["upgradable"] = true;
+					else if (msedge["noedge.exe"]["upgradable"].as<bool>() == true)
+						msedge["noedge.exe"]["upgradable"] = false;
+					else
+						msedge["noedge.exe"]["upgradable"] = false;
+				}
+				catch (...) {
+					msedge["noedge.exe"]["upgradable"] = true;
+				}
+				msedge.save(noedgeconf + "\\\\msedge.ini");
+				msedge.load(noedgeconf + "\\\\msedge.ini");
+				cout << dye::green("upgradable value is set to ") << dye::green(msedge["noedge.exe"]["upgradable"].as<string>()) << endl;
+			}
+		}
+		// Parameter --offline
+		else if (*arg2 == "--offline")
+		{
+			startup::conf_noedge();
+			if (argc > 3)
+			{
+				string* arg3 = new string(argv[3]);
+				*arg3 = strlow(*arg3);
+				if (grep(*arg3, "jsonfile="))
+				{
+					replace_all(*arg3, "jsonfile=", "");
+					startup::t_temp();
+					startup::conf_noedge();
+					try{
+						if (fs::copy_file(*arg3, tmp + "\\\\search.json", fs::copy_options::overwrite_existing))
+						{
+							msedge.load(noedgeconf + "\\\\msedge.ini");
+							msedge["noedge.exe"]["offline"] = true;
+							msedge.save(noedgeconf + "\\\\msedge.ini");
+							cout << dye::green("Done. Now run noedge.exe to work it as offline.") << endl;
+						}
+					}
+					catch (...) {
+						cout << dye::red("Error: Can't copy files to temp directory") << endl;
+					}
+				}
+				else
+					cout << dye::red("Error: Json file path is not provided") << endl;
+				delete arg3;
+			}
+			else
+				cout << dye::red("Error: Json file path is not provided") << endl;
+		}
+		else if (*arg2 == "--online")
+		{
+			startup::conf_noedge();
+			msedge.load(noedgeconf + "\\\\msedge.ini");
+			try{
+				if (msedge["noedge.exe"]["offline"].as<bool>())
+				{
+					msedge["noedge.exe"]["offline"] = false;
+					msedge.save(noedgeconf + "\\\\msedge.ini");
+					cout << dye::green("Offline mode is now turned off") << endl;
+				}
+				else
+					throw 1;
+			}
+			catch (...) {
+				cout << dye::green("Offline mode is already off") << endl;
+			}
+		}
+		else
+		{
+			cout << dye::red("Error: Unknown debug parameter") << endl;
+		}
+		delete arg2;
+	}
+};
+
+
 int main(const int argc, const char *argv[])
 {
 	exec = argv[0];
@@ -646,52 +763,8 @@ int main(const int argc, const char *argv[])
 		{
 			if (argc > 2)
 			{
-				string* arg2 = new string(argv[2]);
-				if (*arg2 == "--upgrade")
-				{
-					startup::conf_noedge();
-					if (argc > 3)
-					{
-						string* arg3 = new string(argv[3]);
-						if (*arg3 == "true" || *arg3 == "1")
-						{
-							msedge.load(noedgeconf + "\\\\msedge.ini");
-							msedge["noedge.exe"]["upgradable"] = "true";
-							msedge.save(noedgeconf + "\\\\msedge.ini");
-						}
-						else if (*arg3 == "false" || *arg3 == "0")
-						{
-							msedge.load(noedgeconf + "\\\\msedge.ini");
-							msedge["noedge.exe"]["upgradable"] = "false";
-							msedge.save(noedgeconf + "\\\\msedge.ini");
-						}
-						else
-						{
-							cout << dye::red("Invalid value passed, only bool type value supported.") << endl;
-						}
-						delete arg3;
-						return 0;
-					}
-					else
-					{
-						msedge.load(noedgeconf + "\\\\msedge.ini");
-						if(msedge["noedge.exe"]["upgradable"].as<string>() == "false")
-							msedge["noedge.exe"]["upgradable"] = "true";
-						else if(msedge["noedge.exe"]["upgradable"].as<string>() == "true")
-							msedge["noedge.exe"]["upgradable"] = "false";
-						else
-							msedge["noedge.exe"]["upgradable"] = "false";
-						msedge.save(noedgeconf + "\\\\msedge.ini");
-						msedge.load(noedgeconf + "\\\\msedge.ini");
-						cout << dye::green("upgradable value is set to ") << dye::green(msedge["noedge.exe"]["upgradable"].as<string>()) << endl;
-					}
-					return 0;
-				}
-				else
-				{
-					cout << dye::red("Error: Unknown debug parameter") << endl;
-				}
-				delete arg2;
+				debug* d = new debug(argc, argv);
+				delete d;
 			}
 			else {
 				cout << dye::red("Error: No debug parameter") << endl;
@@ -702,9 +775,7 @@ int main(const int argc, const char *argv[])
 		// Help Parameters
 		if (*arg == "--help")
 		{
-			startup::exever();
 			cout << hue::green;
-			cout << "NoEdge " << ver << " By BiltuDas1" << endl << endl << endl;
 			cout << "Arguments:" << endl;
 			cout << "--recovery       Restores msedge to previous state" << endl;
 			cout << "--help           Opens help window" << endl;
@@ -725,12 +796,32 @@ int main(const int argc, const char *argv[])
 	ShowConsoleCursor(false);
     system("mode 120,30");
     system("title NO EDGE");
-    startup start(true);
+	once();
+	return 0;
+}
+
+void once()
+{
+	startup* start = new startup(true);
+	delete start;
+	msedge.load(noedgeconf + "/msedge.ini");
 	cout << hue::green;
 	// No Edge main program
 	logo();
-	checkup check;
+	try {
+		if (msedge["noedge.exe"]["offline"].as<bool>())
+		{
+			cout << "        Loading...";
+			Sleep(3000);
+		}
+		else
+			throw 1;
+	}
+	catch (...) {
+		checkup* check = new checkup;
+		delete check;
+	}
 	system("CLS");
-	function1 func;
-	return 0;
+	function1 *func = new function1;
+	delete func;
 }
