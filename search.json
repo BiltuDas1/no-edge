@@ -58,11 +58,11 @@
         }
     ],
     "query":[
-        "/search?q=",
-        "/?q=",
-        "/search/?text=",
-        "/web?query=",
+        "/search?q=$query$",
+        "/?q=$query$",
+        "/search/?text=$query$",
+        "/web?query=$query$",
         "/s/$query$.html",
-        "/serp?q="
+        "/serp?q=$query$"
     ]
 }
