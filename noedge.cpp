@@ -221,7 +221,7 @@ public:
 			logo();
 			cout << "        Checking Curl..." << endl;
 			checktool("curl.exe", "https://github.com/BiltuDas1/no-edge#how-to-install-curl");
-			system(("curl --Silent -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/BiltuDas1/no-edge/main/update > " + tmp + "\\\\update").c_str());
+			system("curl --Silent -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/BiltuDas1/no-edge/main/update > %tmp%\\update");
 			file.open(tmp + "\\\\update");
 			if (file)
 			{
@@ -249,19 +249,33 @@ public:
 		// If upgradeable
 		getline(file, temp_str);
 		if (temp_str == "false")
-			upgrade=false;
-		file.close();
-		delf(tmp + "\\\\update");
-		msedge.load(noedgeconf + "\\\\msedge.ini");
-		if (msedge["noedge.exe"]["upgradable"].as<bool>() == false)
-			upgrade = false;
-		if (msedge["noedge.exe"]["upgradable"].as<bool>() == false)
-			upgrade = true;
-		temp_int = versionCompare(msedge["noedge.exe"]["version"].as<string>(), ver);
-		if (temp_int == 1 || temp_int == 0 && upgrade == false)
 			upgrade = false;
 		else
 			upgrade = true;
+		file.close();
+		delf(tmp + "\\\\update");
+		try {
+			msedge.load(noedgeconf + "\\\\msedge.ini");
+			if (msedge["noedge.exe"]["upgradable"].as<bool>() == false)
+				throw 1;
+			if (msedge["noedge.exe"]["upgradable"].as<bool>() == false)
+				upgrade = true;
+		}
+		catch (...)
+		{
+			upgrade = false;
+		}
+		try{
+			temp_int = versionCompare(msedge["noedge.exe"]["version"].as<string>(), ver);
+			if (temp_int == 1 || temp_int == 0 && upgrade == false)
+				throw 1;
+			else
+				upgrade = true;
+		}
+		catch (...)
+		{
+			upgrade = false;
+		}
 
 		// Checking for Updates
 		system("CLS");
@@ -296,6 +310,7 @@ protected:
 	{
 		system("taskkill /im msedge.exe /f >nul 2>nul");
 		fs::current_path(edge);
+		system("takeown /A /F msedge.exe 2>nul >nul");
 		fs::current_path("../..");
 
 		if (!fs::exists("Recovery"))
@@ -325,7 +340,7 @@ protected:
 		// Moving all files to 'noedge-recovery'
 		if (fs::exists("Edge"))
 			fs::rename("Edge", "Recovery/" + temp_str2 + "/Edge");
-		if (fs::exists("Recovery"))
+		if (fs::exists("EdgeCore"))
 			fs::rename("EdgeCore", "Recovery/" + temp_str2 + "/EdgeCore");
 		if (fs::exists("EdgeUpdate"))
 			fs::rename("EdgeUpdate", "Recovery/" + temp_str2 + "/EdgeUpdate");
@@ -333,7 +348,7 @@ protected:
 		// Copying 'msedge.exe' from ProgramData
 		fs::create_directories("Edge/Application");
 		fs::current_path(edge);
-		fs::copy(noedgeconf + "\\\\msedge.exe", fs::current_path());
+		fs::copy_file(noedgeconf + "\\\\msedge.exe", edge + "\\\\msedge.exe");
 		system("takeown /f msedge.exe /A 2>nul >nul");
 		system("icacls msedge.exe /inheritance:r 2>nul >nul");
 		system("icacls msedge.exe /grant:r \"Administrators\":(f) 2>nul >nul");
@@ -441,7 +456,7 @@ public:
 			// Final
 			new_install();
 			system("CLS");
-			cout << "Operation completed successfully." << endl;
+			cout << dye::green("Operation completed successfully.") << endl;
 			lkey = _getch();
 		}
 		else {
@@ -449,7 +464,7 @@ public:
 			try{
 				if (msedge["noedge.exe"]["version"].as<string>() == ver)
 				{
-					cout << "Success: Setting Applied Successfully." << endl;
+					cout << dye::green("Success: Setting Applied Successfully.") << endl;
 					lkey = _getch();
 				}
 				else
@@ -735,7 +750,8 @@ public:
 		// Recovery parameter
 		else if (*arg == "--recovery")
 		{
-			startup start(false);
+			startup::t_temp();
+			startup::edir(false);
 			recovery* recover = new recovery;
 			delete recover;
 		}
