@@ -272,3 +272,16 @@ string strlow(string eb)
     }
     return eb;
 }
+
+string lpw_s(LPWSTR a)
+{
+    wstring ws = a;
+    return string(ws.begin(), ws.end());
+}
+
+LPCWSTR str_lpw(string a)
+{
+    wstring b(a.begin(), a.end());
+    LPCWSTR k = b.c_str();
+    return k;
+}
