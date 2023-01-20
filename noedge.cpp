@@ -4,6 +4,7 @@
 #include "./include/rapidjson/istreamwrapper.h"
 #include "./include/rapidjson/writer.h"
 #include "./include/rapidjson/stringbuffer.h"
+
 using namespace rapidjson;
 
 time_t tt;
@@ -221,7 +222,7 @@ public:
 			logo();
 			cout << "        Checking Curl..." << endl;
 			checktool("curl.exe", "https://github.com/BiltuDas1/no-edge#how-to-install-curl");
-			system("curl --Silent -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/BiltuDas1/no-edge/main/update > %tmp%\\update");
+			downloadf("https://raw.githubusercontent.com/BiltuDas1/no-edge/main/update", tmp + "\\update");
 			file.open(tmp + "\\\\update");
 			if (file)
 			{
@@ -287,11 +288,20 @@ public:
 			system("CLS");
 			logo();
 			cout << "        Updating Program..." << endl;
-			system(("curl --Silent -L " + durl + " --Output %tmp%\\noedge_" + tver + ".exe && move /y %tmp%\\noedge_" + tver + ".exe >nul 2>nul").c_str());
-			myfile.open(tmp + "////continue");
-			myfile << exec;
-			myfile.close();
-			system(("start noedge_" + tver + ".exe").c_str());
+			if (downloadf(durl, cd + "\\noedge_" + tver + ".exe"))
+			{
+				myfile.open(tmp + "////continue");
+				myfile << exec;
+				myfile.close();
+				WinVisible(false);
+				if (MessageBox(NULL, L"Update Completed. Do you want to execute it now?", L"noedge.exe", MB_ICONINFORMATION + MB_YESNO) == 6)
+					ShellExecuteA(NULL, "open", ("noedge_" + tver + ".exe").c_str(), NULL, NULL, SW_SHOW);
+			}
+			else
+			{
+				cout << dye::red("        Updating Failed. Please restart application and try again.") << endl;
+				Sleep(5000);
+			}
 			exit(0);
 		}
 
@@ -299,7 +309,7 @@ public:
 		system("CLS");
 		logo();
 		cout << "        Downloading databases..." << endl;
-		system("curl --Silent https://raw.githubusercontent.com/BiltuDas1/no-edge/main/search.json>\"%tmp%\\search.json\"");
+		downloadf("https://raw.githubusercontent.com/BiltuDas1/no-edge/main/search.json", tmp + "\\search.json");
 		system("CLS");
 	}
 };
@@ -434,7 +444,7 @@ public:
 		{
 			cout << "Downloading msedge.exe, It may take a while...";
 			fs::create_directory(noedgeconf);
-			system(("curl --Silent -L " + eurl + " --Output %programdata%\\MSEDGE\\msedge.exe").c_str());
+			downloadf(eurl, noedgeconf + "\\msedge.exe");
 			if (fs::exists(noedgeconf + "/msedge.exe"))
 				cout << dye::green("Done") << endl;
 			else
@@ -817,6 +827,7 @@ public:
 int main(const int argc, const char *argv[])
 {
 	exec = argv[0];
+	// Main Program
 	if(argc > 1)
 	{
 		extra *e = new extra(argc, argv);

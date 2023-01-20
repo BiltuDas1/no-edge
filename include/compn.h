@@ -14,6 +14,7 @@
 #include<ctime>
 #include"inicpp.h"
 #pragma comment(lib,"Wininet.lib")
+#pragma comment(lib, "urlmon.lib")
 #pragma once
 
 using namespace std;
@@ -236,24 +237,14 @@ bool grep(string n, string f)
         return 0;
 }
 
-class WinVisible
+void WinVisible(bool val)
 {
-public:
-    WinVisible() {}
-    WinVisible(bool val)
-    {
-        HWND Window = GetConsoleWindow();
-        if (val)
-            ShowWindow(Window, SW_SHOW);
-        else
-            ShowWindow(Window, SW_HIDE);
-    }
-    ~WinVisible()
-    {
-        HWND Window = GetConsoleWindow();
-        ShowWindow(Window, SW_SHOW);
-    }
-};
+   HWND Window = GetConsoleWindow();
+   if (val)
+       ShowWindow(Window, SW_SHOW);
+   else
+       ShowWindow(Window, SW_HIDE);
+}
 
 bool if_match(char *val, string val2)
 {
@@ -284,4 +275,16 @@ LPCWSTR str_lpw(string a)
     wstring b(a.begin(), a.end());
     LPCWSTR k = b.c_str();
     return k;
+}
+
+bool downloadf(string url, string file)
+{
+    wstring u = wstring(url.begin(), url.end());
+    wstring f = wstring(file.begin(), file.end());
+    const wchar_t* ur = u.c_str();
+    const wchar_t* fi = f.c_str();
+    if (S_OK == URLDownloadToFile(NULL, ur, fi, 0, NULL))
+        return true;
+    else
+        return false;
 }
