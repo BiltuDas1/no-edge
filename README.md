@@ -4,8 +4,12 @@ The Project Helps you to remove build-in Edge Browser from Windows and replacing
 **Note: Now This repo doesn't work with NoEdge 1.1.0.9 or before, if you still want to use older version then check [no-edge/before](https://github.com/BiltuDas1/no-edge/tree/before) branch.**
 
 # Pre-Requesting
+* [Visual Studio C++ Redistributable x86](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist#visual-studio-2015-2017-2019-and-2022)
 * Another Browser like Firefox, Chrome, Chromium etc. (Don't choose Internet Explorer or Microsoft Browsers)
 * Default Browser need to be changed to another Browser
+
+# How It works
+This Project replace msedge.exe with modified msedge.exe(which is complied under latest released). The msedge.exe contains some known parameters by default which passed by the windows to the original msedge.exe. For more information check [function.md](./docs/function.md)
 
 # FAQ
 #### My Antivirus blocked the program, is it safe to run?
