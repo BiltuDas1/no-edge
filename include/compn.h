@@ -10,9 +10,9 @@
 #include<wininet.h>
 #include<direct.h>
 #include<filesystem>
-#include<windows.h>
 #include<ctime>
 #include"inicpp.h"
+#include"WinReg.hpp"
 #pragma comment(lib,"Wininet.lib")
 #pragma comment(lib, "urlmon.lib")
 #pragma once
@@ -30,6 +30,7 @@ ifstream file;
 ofstream myfile;
 ini::IniFile msedge;
 
+// Prints noedge logo
 void logo()
 {
     std::cout << "\n\n" << std::endl;
@@ -45,6 +46,7 @@ void logo()
     std::cout << "                                                                                                 Made by BiltuDas1" << std::endl;
 }
 
+// Shows license screen of noedge
 void license()
 {
     system("mode 96,30");
@@ -72,6 +74,8 @@ void license()
     cout << "                    For more information, please refer to https://unlicense.org\n\n\n" << endl;
 }
 
+// Replace a specific text with a text
+// inside a string
 void replace_all(
 	std::string& s,
 	std::string const& toReplace,
@@ -97,6 +101,7 @@ void replace_all(
 	s.swap(buf);
 }
 
+// Assign Environment variable to a variable
 void envr(string &var, const char* env)
 {
 	char* buf = nullptr;
@@ -108,6 +113,7 @@ void envr(string &var, const char* env)
 	}
 }
 
+// Compares two versions
 // Returns 1 if v2 is smaller, -1 if v1 is smaller, 0 if equal 
 int versionCompare(string v1, string v2)
 {
@@ -148,12 +154,14 @@ int versionCompare(string v1, string v2)
     return 0;
 }
 
+// Delete file from hard disk
 void delf(string file)
 {
     const char* fl = file.c_str();
     remove(fl);
 }
 
+// Show or hide Console Cursor
 void ShowConsoleCursor(bool showFlag)
 {
     HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -165,6 +173,7 @@ void ShowConsoleCursor(bool showFlag)
     SetConsoleCursorInfo(out, &cursorInfo);
 }
 
+// Checks if file exist
 bool filef(string f)
 {
     std::ifstream file;
@@ -178,6 +187,7 @@ bool filef(string f)
     }
 }
 
+// Sends a messagebox to the user
 inline void failm(string a, string b, unsigned int er)
 {
     wstring c = wstring(a.begin(), a.end());
@@ -187,6 +197,8 @@ inline void failm(string a, string b, unsigned int er)
     MessageBox(NULL, e, f, er);
 }
 
+// Detect Architecture and returns
+// true if x64, returns false if x86
 bool artdet()
 {
     envr(arc, "PROCESSOR_ARCHITEW6432");
@@ -210,33 +222,18 @@ bool artdet()
     }
 }
 
-
-int hextod(char num[]) {
-    int len = (int)strlen(num);
-    int base = 1;
-    int temp = 0;
-    for (int i = len - 1; i >= 0; i--) {
-        if (num[i] >= '0' && num[i] <= '9') {
-            temp += (num[i] - 48) * base;
-            base = base * 16;
-        }
-        else if (num[i] >= 'A' && num[i] <= 'F') {
-            temp += (num[i] - 55) * base;
-            base = base * 16;
-        }
-    }
-    return temp;
-}
-
-bool grep(string n, string f)
+// Helps to find text into string and
+// returns true if found any.
+bool grep(string str, string find)
 {
-    size_t found = n.find(f);
+    size_t found = str.find(find);
     if (found != string::npos)
         return 1;
     else
         return 0;
 }
 
+// Show or Hides the Current window
 void WinVisible(bool val)
 {
    HWND Window = GetConsoleWindow();
@@ -246,15 +243,7 @@ void WinVisible(bool val)
        ShowWindow(Window, SW_HIDE);
 }
 
-bool if_match(char *val, string val2)
-{
-    string a = val;
-    if (a == val2)
-        return true;
-    else
-        return false;
-}
-
+// Converts all string to lowercase
 string strlow(string eb)
 {
     for (unsigned int i = 0;i < eb.length();i++)
@@ -264,12 +253,14 @@ string strlow(string eb)
     return eb;
 }
 
+// Converts LPWSTR to String
 string lpw_s(LPWSTR a)
 {
     wstring ws = a;
     return string(ws.begin(), ws.end());
 }
 
+// Converts String to LPCWSTR
 LPCWSTR str_lpw(string a)
 {
     wstring b(a.begin(), a.end());
@@ -277,6 +268,7 @@ LPCWSTR str_lpw(string a)
     return k;
 }
 
+// Downloads a file into PC
 bool downloadf(string url, string file)
 {
     wstring u = wstring(url.begin(), url.end());
@@ -287,4 +279,14 @@ bool downloadf(string url, string file)
         return true;
     else
         return false;
+}
+
+// Converts Wstring to string
+string ws2s(const wstring& wstr)
+{
+    string str;
+    size_t size;
+    str.resize(wstr.length());
+    wcstombs_s(&size, &str[0], str.size() + 1, wstr.c_str(), wstr.size());
+    return str;
 }
