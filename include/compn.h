@@ -275,6 +275,7 @@ bool downloadf(string url, string file)
     wstring f = wstring(file.begin(), file.end());
     const wchar_t* ur = u.c_str();
     const wchar_t* fi = f.c_str();
+    DeleteUrlCacheEntry(ur);
     if (S_OK == URLDownloadToFile(NULL, ur, fi, 0, NULL))
         return true;
     else

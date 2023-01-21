@@ -7,9 +7,6 @@
 
 using namespace rapidjson;
 
-time_t tt;
-struct tm ti;
-
 void once();
 
 class startup
@@ -230,7 +227,7 @@ public:
 			logo();
 			cout << "        Checking Curl..." << endl;
 			checktool("curl.exe", "https://github.com/BiltuDas1/no-edge#how-to-install-curl");
-			downloadf("https://raw.githubusercontent.com/BiltuDas1/no-edge/main/update", tmp + "\\update");
+			system("curl -s https://raw.githubusercontent.com/BiltuDas1/no-edge/main/update>%tmp%\\update.tmp");
 			file.open(tmp + "\\\\update.tmp");
 			if (file)
 			{
@@ -345,6 +342,8 @@ protected:
 			}
 		}
 
+		time_t tt;
+		struct tm ti;
 
 		// Creating 'noedge-recovery'
 		tt = time(NULL);   // get time now
