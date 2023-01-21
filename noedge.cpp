@@ -352,19 +352,7 @@ protected:
 		temp_str2 = "noedge-recovery" + *tp;
 		fs::create_directory("Recovery/" + temp_str2);
 		delete tp;
-
-		// Terminating Edge Update Services
-		ShellExecuteA(NULL, "open", (system32 + "\\taskkill.exe").c_str(), "/im MicrosoftEdgeUpdate.exe /f", NULL, SW_SHOW);
-		lkey = _getch();
-		// Deleting Edge Update Registry
-		winreg::RegKey key;
-		winreg::RegResult g = key.TryOpen(HKEY_LOCAL_MACHINE, L"SYSTEM\\ControlSet001\\Services");
-		if (g)
-		{
-			g = key.TryDeleteTree(L"edgeupdate");
-			g = key.TryDeleteTree(L"edgeupdatem");
-		}
-		key.~RegKey();
+		
 
 		// Moving all files to 'noedge-recovery'
 		if (fs::exists("Edge"))
@@ -393,31 +381,20 @@ public:
 	function1()
 	{
 		// License
-		msedge.load(noedgeconf + "\\\\msedge.ini");
-		try{
-			temp_bool = msedge["noedge.exe"]["seenlicense"].as<bool>();
-		}
-		catch (...)
+		while (true)
 		{
-			temp_bool = false;
-		}
-		if(!temp_bool)
-		{
-			while (true)
-			{
-				license();
-				cout << "                               Are you Agree with the License?[Y/N]" << endl;
-				lkey = _getch();
-				if (lkey == 89 || lkey == 121)
-					break;
-				else if (lkey == 78 || lkey == 110)
-					exit(0);
-				else {
-					system("CLS");
-					cout << "                           " << dye::red("Error: Invalid Option, Please try again.") << hue::green << endl;
-					Sleep(5000);
-					system("CLS");
-				}
+			license();
+			cout << "                               Are you Agree with the License?[Y/N]" << endl;
+			lkey = _getch();
+			if (lkey == 89 || lkey == 121)
+				break;
+			else if (lkey == 78 || lkey == 110)
+				exit(0);
+			else {
+				system("CLS");
+				cout << "                           " << dye::red("Error: Invalid Option, Please try again.") << hue::green << endl;
+				Sleep(5000);
+				system("CLS");
 			}
 		}
 		
@@ -483,13 +460,12 @@ public:
 				lkey = _getch();
 				exit(1);
 			}
-			// Generating sha256
-			system("certutil -hashfile %programdata%\\MSEDGE\\msedge.exe SHA256>%tmp%\\sha256.tmp");
-			file.open(tmp + "\\\\sha256.tmp");
+			system("certutil -hashfile %programdata%\\MSEDGE\\msedge.exe SHA256>%tmp%\\sha256");
+			file.open(tmp + "\\\\sha256");
 			getline(file, temp_str);
 			getline(file, temp_str);
 			file.close();
-			delf(tmp + "\\\\sha256.tmp");
+			delf(tmp + "\\\\sha256");
 			msedge.load(noedgeconf + "\\\\msedge.ini");
 			msedge["msedge.exe"]["hash"] = temp_str;
 			msedge.save(noedgeconf + "\\\\msedge.ini");
@@ -572,13 +548,10 @@ public:
 			}
 		}
 		delete pth;
-		printf("0. Exit");
 		cout << endl;
 		cout << "Choice: ";
 		cin >> temp_int;
 		cout << hue::reset << endl << endl;
-		if (temp_int == 0)
-			exit(0);
 		if (temp_int > *i || temp_int <= 0)
 		{
 			cout << dye::red("Invalid choice, Please try again.");
@@ -750,49 +723,6 @@ public:
 				msedge.save(noedgeconf + "\\\\msedge.ini");
 				msedge.load(noedgeconf + "\\\\msedge.ini");
 				cout << dye::green("upgradable value is set to ") << dye::green(msedge["noedge.exe"]["upgradable"].as<string>()) << endl;
-			}
-		}
-		else if (*arg2 == "--seen-license")
-		{
-			startup::conf_noedge();
-			if (argc > 3)
-			{
-				string* arg3 = new string(argv[3]);
-				if (*arg3 == "true" || *arg3 == "1")
-				{
-					msedge.load(noedgeconf + "\\\\msedge.ini");
-					msedge["noedge.exe"]["seenlicense"] = true;
-					msedge.save(noedgeconf + "\\\\msedge.ini");
-				}
-				else if (*arg3 == "false" || *arg3 == "0")
-				{
-					msedge.load(noedgeconf + "\\\\msedge.ini");
-					msedge["noedge.exe"]["seenlicense"] = false;
-					msedge.save(noedgeconf + "\\\\msedge.ini");
-				}
-				else
-				{
-					cout << dye::red("Invalid value passed, only bool type value supported.") << endl;
-				}
-				delete arg3;
-			}
-			else
-			{
-				msedge.load(noedgeconf + "\\\\msedge.ini");
-				try {
-					if (msedge["noedge.exe"]["seenlicense"].as<bool>() == false)
-						msedge["noedge.exe"]["seenlicense"] = true;
-					else if (msedge["noedge.exe"]["seenlicense"].as<bool>() == true)
-						msedge["noedge.exe"]["seenlicense"] = false;
-					else
-						msedge["noedge.exe"]["seenlicense"] = false;
-				}
-				catch (...) {
-					msedge["noedge.exe"]["seenlicense"] = true;
-				}
-				msedge.save(noedgeconf + "\\\\msedge.ini");
-				msedge.load(noedgeconf + "\\\\msedge.ini");
-				cout << dye::green("seenlicense value is set to ") << dye::green(msedge["noedge.exe"]["seenlicense"].as<string>()) << endl;
 			}
 		}
 		else

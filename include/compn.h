@@ -24,7 +24,7 @@ string exec, tmp, arc, tver, ver, desktop, system32, cd, noedgeconf, edge, temp_
 const string durl = "https://github.com/BiltuDas1/no-edge/releases/latest/download/noedge.exe";
 const string eurl = "https://github.com/BiltuDas1/no-edge/releases/latest/download/msedge.exe";
 int lkey, temp_int;
-bool upgrade, isFailed = true, temp_bool;
+bool upgrade, isFailed = true;
 
 ifstream file;
 ofstream myfile;
@@ -52,7 +52,7 @@ void license()
     system("mode 96,30");
     system("title License");
     printf("                                NO EDGE IS SIGNED UNDER THE UNLICENSE\n");
-    printf("               This is free and unencumbered software released into the public domain.\n\n");
+    printf("               This is freeand unencumbered software released into the public domain.\n\n");
     printf("               Anyone is free to copy, modify, publish, use, compile, sell, or\n");
     printf("               distribute this software, either in source code form or as a compiled\n");
     printf("               binary, for any purpose, commercial or non - commercial, and by any\n");
