@@ -126,12 +126,13 @@ public:
 					}
 				}
 				key.~RegKey();
+				exit(0);
 			}
 			else
 			{
 				failm("Error: Can't access Startup registry key HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", "msedge.exe", MB_ICONERROR);
+				exit(1);
 			}
-			exit(0);
 		}
 		// Single Argument
 		else if (grep(lpw_s(lpCmdLine), "--single-argument"))

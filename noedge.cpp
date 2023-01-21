@@ -1,5 +1,5 @@
-#include"./include/compn.h"
-#include"./include/color.hpp"
+#include "./include/compn.h"
+#include "./include/color.hpp"
 #include "./include/rapidjson/document.h"
 #include "./include/rapidjson/istreamwrapper.h"
 #include "./include/rapidjson/writer.h"
@@ -88,28 +88,38 @@ public:
 		edir(cli);
 	}
 
+	// User temporary directory
 	static void t_temp()
 	{
 		envr(tmp, "tmp");
 		replace_all(tmp, "\\", "\\\\");
 	}
 
+	// System32 Location
 	static void s32()
 	{
 		envr(system32, "windir");
 		system32 = system32 + "\\\\System32";
 	}
 
+	// Desktop Location
 	static void desktop_loc()
 	{
-		system("reg query \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" /v Desktop | more +2>%tmp%\\registry");
-		file.open(tmp + "\\\\registry");
-		getline(file, desktop);
-		file.close();
-		delf(tmp + "\\\\registry");
-		desktop.erase(0, 32);
+		winreg::RegKey key;
+		winreg::RegResult g = key.TryOpen(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders");
+		if (g)
+		{
+			desktop = ws2s(key.GetStringValue(L"Desktop"));
+		}
+		else
+		{
+			cout << dye::red("Error: Unable to detect Desktop Location. Program Terminate.");
+			exit(1);
+		}
+		key.~RegKey();
 	}
 
+	// No Edge Configuration directory
 	static void conf_noedge()
 	{
 		envr(noedgeconf, "programdata");
@@ -119,16 +129,13 @@ public:
 	// EDGE Directory
 	static void edir(bool cli)
 	{
-		system("reg query \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\msedge.exe\" /ve | more +2>%tmp%\\registry");
-		file.open(tmp + "\\\\registry");
-		getline(file, edge);
-		file.close();
-		delf(tmp + "\\\\registry");
-		edge.erase(0, 27);
-		temp_int = (int)edge.find_last_of("\\");
-		edge.erase(temp_int);
-		replace_all(edge, "\\", "\\\\");
-		if (!fs::is_directory(edge))
+		winreg::RegKey key;
+		winreg::RegResult g = key.TryOpen(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\msedge.exe");
+		if (g)
+		{
+			edge = ws2s(key.GetStringValue(L"Path"));
+		}
+		else
 		{
 			cout << dye::red("Error: Edge is not installed. Program Terminated.") << endl;
 			if (cli)
@@ -137,6 +144,7 @@ public:
 			}
 			exit(1);
 		}
+		key.~RegKey();
 	}
 };
 
@@ -223,13 +231,13 @@ public:
 			cout << "        Checking Curl..." << endl;
 			checktool("curl.exe", "https://github.com/BiltuDas1/no-edge#how-to-install-curl");
 			downloadf("https://raw.githubusercontent.com/BiltuDas1/no-edge/main/update", tmp + "\\update");
-			file.open(tmp + "\\\\update");
+			file.open(tmp + "\\\\update.tmp");
 			if (file)
 			{
 				if (file.peek() == EOF)
 				{
 					file.close();
-					delf(tmp + "\\\\update");
+					delf(tmp + "\\\\update.tmp");
 					system("CLS");
 					logo();
 					cout << "        " << dye::red("Error: Curl not working, Please reinstall curl to fix the problem.") << hue::green << endl;
