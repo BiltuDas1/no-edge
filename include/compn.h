@@ -33,17 +33,17 @@ ini::IniFile msedge;
 // Prints noedge logo
 void logo()
 {
-    std::cout << "\n\n" << std::endl;
-    std::cout << "       NNNNN        NNN         OOOOOOOOO             EEEEEEEEEEEE   DDDDDDD         GGGGGGGGGGGGG    EEEEEEEEEEEE" << std::endl;
-    std::cout << "       NNNNNNN      NNN      OOOOOOOOOOOOOO           EEEEEEEEEEE    DDDDDDDDD      GGGGGGGGGGGGGGG   EEEEEEEEEEE" << std::endl;
-    std::cout << "       NNN  NNN     NNN     OOOO        OOOO          EEE            DDD     DDD    GGG               EEE" << std::endl;
-    std::cout << "       NNN   NNN    NNN    OOOO          OOOO         EEEEEEEEE      DDD      DDD   GGG   GGGGGGGGG   EEEEEEEEE" << std::endl;
-    std::cout << "       NNN    NNN   NNN    OOO            OOO         EEEEEEEE       DDD      DDD   GGG   GGGGGGGGG   EEEEEEEE" << std::endl;
-    std::cout << "       NNN     NNN  NNN    OOOO          OOOO         EEEEEEEEE      DDD      DDD   GGG         GGG   EEEEEEEEE" << std::endl;
-    std::cout << "       NNN      NNN NNN     OOOO        OOOO          EEE            DDD     DDD    GGG         GGG   EEE" << std::endl;
-    std::cout << "       NNN       NNNNNN      OOOOOOOOOOOOOO           EEEEEEEEEEE    DDDDDDDDD      GGGGGGGGGGGGGGG   EEEEEEEEEEE" << std::endl;
-    std::cout << "       NNN        NNNNN        OOOOOOOOOO             EEEEEEEEEEEE   DDDDDDD         GGGGGGGGGGGGG    EEEEEEEEEEEE\n" << std::endl;
-    std::cout << "                                                                                                 Made by BiltuDas1" << std::endl;
+    printf("\n\n\n");
+    printf("       NNNNN        NNN         OOOOOOOOO             EEEEEEEEEEEE   DDDDDDD         GGGGGGGGGGGGG    EEEEEEEEEEEE\n");
+    printf("       NNNNNNN      NNN      OOOOOOOOOOOOOO           EEEEEEEEEEE    DDDDDDDDD      GGGGGGGGGGGGGGG   EEEEEEEEEEE\n");
+    printf("       NNN  NNN     NNN     OOOO        OOOO          EEE            DDD     DDD    GGG               EEE\n");
+    printf("       NNN   NNN    NNN    OOOO          OOOO         EEEEEEEEE      DDD      DDD   GGG   GGGGGGGGG   EEEEEEEEE\n");
+    printf("       NNN    NNN   NNN    OOO            OOO         EEEEEEEE       DDD      DDD   GGG   GGGGGGGGG   EEEEEEEE\n");
+    printf("       NNN     NNN  NNN    OOOO          OOOO         EEEEEEEEE      DDD      DDD   GGG         GGG   EEEEEEEEE\n");
+    printf("       NNN      NNN NNN     OOOO        OOOO          EEE            DDD     DDD    GGG         GGG   EEE\n");
+    printf("       NNN       NNNNNN      OOOOOOOOOOOOOO           EEEEEEEEEEE    DDDDDDDDD      GGGGGGGGGGGGGGG   EEEEEEEEEEE\n");
+    printf("       NNN        NNNNN        OOOOOOOOOO             EEEEEEEEEEEE   DDDDDDD         GGGGGGGGGGGGG    EEEEEEEEEEEE\n\n");
+    printf("                                                                                                 Made by BiltuDas1\n");
 }
 
 // Shows license screen of noedge
@@ -51,27 +51,27 @@ void license()
 {
     system("mode 96,30");
     system("title License");
-    cout << "                                NO EDGE IS SIGNED UNDER THE UNLICENSE\n";
-    cout << "               This is freeand unencumbered software released into the public domain.\n\n";
-    cout << "               Anyone is free to copy, modify, publish, use, compile, sell, or\n";
-    cout << "               distribute this software, either in source code form or as a compiled\n";
-    cout << "               binary, for any purpose, commercial or non - commercial, and by any\n";
-    cout << "               means.\n\n";
-    cout << "               In jurisdictions that recognize copyright laws, the author or authors\n";
-    cout << "               of this software dedicate any and all copyright interest in the\n";
-    cout << "               software to the public domain.We make this dedication for the benefit\n";
-    cout << "               of the public at largeand to the detriment of our heirsand\n";
-    cout << "               successors.We intend this dedication to be an overt act of\n";
-    cout << "               relinquishment in perpetuity of all presentand future rights to this\n";
-    cout << "               software under copyright law.\n\n";
-    cout << "               THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\n";
-    cout << "               EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\n";
-    cout << "               MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\n";
-    cout << "               IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR\n";
-    cout << "               OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,\n";
-    cout << "               ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR\n";
-    cout << "               OTHER DEALINGS IN THE SOFTWARE.\n\n";
-    cout << "                    For more information, please refer to https://unlicense.org\n\n\n" << endl;
+    printf("                                NO EDGE IS SIGNED UNDER THE UNLICENSE\n");
+    printf("               This is freeand unencumbered software released into the public domain.\n\n");
+    printf("               Anyone is free to copy, modify, publish, use, compile, sell, or\n");
+    printf("               distribute this software, either in source code form or as a compiled\n");
+    printf("               binary, for any purpose, commercial or non - commercial, and by any\n");
+    printf("               means.\n\n");
+    printf("               In jurisdictions that recognize copyright laws, the author or authors\n");
+    printf("               of this software dedicate any and all copyright interest in the\n");
+    printf("               software to the public domain.We make this dedication for the benefit\n");
+    printf("               of the public at largeand to the detriment of our heirsand\n");
+    printf("               successors.We intend this dedication to be an overt act of\n");
+    printf("               relinquishment in perpetuity of all presentand future rights to this\n");
+    printf("               software under copyright law.\n\n");
+    printf("               THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\n");
+    printf("               EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\n");
+    printf("               MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\n");
+    printf("               IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR\n");
+    printf("               OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,\n");
+    printf("               ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR\n");
+    printf("               OTHER DEALINGS IN THE SOFTWARE.\n\n");
+    printf("                    For more information, please refer to https://unlicense.org\n\n\n\n");
 }
 
 // Replace a specific text with a text
