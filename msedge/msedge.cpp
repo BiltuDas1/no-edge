@@ -1,5 +1,6 @@
 #include"../include/compn.h"
 
+
 class startup2
 {
 public:
@@ -107,7 +108,31 @@ public:
 			exit(0);
 		// Startup Window Parameter
 		else if (grep(lpw_s(lpCmdLine), "--no-startup-window"))
+		{
+			// Accessing registry to delete HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run
+			winreg::RegKey key;
+			winreg::RegResult g = key.TryOpen(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
+			// Checks whether key is accessable or not
+			if(g)
+			{
+				auto kvalues = key.EnumValues();
+				for (const auto& v : kvalues)
+				{
+					// Deleting value which contains msedge.exe
+					if (grep(ws2s(key.GetStringValue(v.first)), "Microsoft\\Edge\\Application\\msedge.exe"))
+					{
+						key.DeleteValue(v.first);
+						break;
+					}
+				}
+				key.~RegKey();
+			}
+			else
+			{
+				failm("Error: Can't access Startup registry key HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", "msedge.exe", MB_ICONERROR);
+			}
 			exit(0);
+		}
 		// Single Argument
 		else if (grep(lpw_s(lpCmdLine), "--single-argument"))
 		{
